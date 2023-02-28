@@ -12,7 +12,7 @@ const Sidebar = () => {
             <div className="l-navbar" id="nav-bar">
                 <nav className="nav">
                     <div className=''>
-                        <i className='bx bx-menu nav_logo-icon fs-2 ps-3' id="header-toggle"></i>
+                        <i className='bx bx-chevron-right nav_logo-icon fs-2 ps-3' id="header-toggle"></i>
                     </div>
                     <div>
                         <a href="#" className="nav_logo">

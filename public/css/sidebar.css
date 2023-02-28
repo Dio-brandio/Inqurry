@@ -40,6 +40,9 @@ a {
 .header_img img{
     width: 40px;
 }
+#header-toggle{
+    transition: .2s ease-in-out;
+}
 
 .l-navbar {
     position: fixed;

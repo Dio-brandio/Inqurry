@@ -20,9 +20,9 @@ export default function Home() {
   )
 }
 
-Home.getLayout = function PageLayout(page) {
-  return <>
-  <Sidebar/>
-  {page}
-  </>
-}
+// Home.getLayout = function PageLayout(page) {
+//   return <>
+//   <Sidebar/>
+//   {page}
+//   </>
+// }
