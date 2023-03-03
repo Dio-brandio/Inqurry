@@ -10,10 +10,8 @@ export default function App({ Component, pageProps }) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
   <link rel="stylesheet" href="css/sidebar.css" />
   </Head>
-  <Sidebar/>
   <Component {...pageProps} />
   <AllScripts/>
   </>
-  
   )
 }
