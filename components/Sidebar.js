@@ -4,53 +4,43 @@ import React from 'react'
 const Sidebar = () => {
     return (
         <>
-            <header className="header d-flex gap-3 align-items-center" id="header">
-                <div className="username">
-                    <b>Peter griffin</b>
+            <div className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 ps" id="sidenav-main">
+                <div className="sidenav-header">
+                    <i className="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+                    <Link className="navbar-brand m-0" href="/Admin" >
+                        <img src="../assets/img/logo-ct-dark.png" className="navbar-brand-img h-100" alt="main_logo" />
+                        <span className="ms-1 font-weight-bold">Inquuiry App</span>
+                    </Link>
                 </div>
-                <div className="header_img"> <img src="https://pbs.twimg.com/profile_images/2959799296/8adc8e7914393f0716a18e133e217dd9_400x400.jpeg" className='rounded' alt="" /> </div>
-            </header>
-            <div className="l-navbar" id="nav-bar">
-                <nav className="nav">
-                    <div className=''>
-                        <i className='bx bx-chevron-right nav_logo-icon fs-2 ps-3' id="header-toggle"></i>
-                    </div>
-                    <div>
-                        <Link href="/" className="nav_logo">
-                            <i className='bx bx-layer nav_logo-icon'></i>
-                            <span className="nav_logo-name">BBBootstrap</span>
-                        </Link>
-                        <div className="nav_list">
-                            <Link href="/" className="nav_link active">
-                                <i className='bx bx-grid-alt nav_icon'></i>
-                                <span className="nav_name">Dashboard</span>
+                <hr className="horizontal dark mt-0" />
+                <div className="collapse navbar-collapse w-auto ps ps--active-y" id="sidenav-collapse-main">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <Link className="nav-link " href="/">
+                                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i className="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                                </div>
+                                <span className="nav-link-text ms-1">Dashboard</span>
                             </Link>
-                            <Link href="/branches" className="nav_link">
-                                <i className='bx bx-user nav_icon'></i>
-                                <span className="nav_name">branches</span>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link " href="/Admin/Details">
+                                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i className="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                                </div>
+                                <span className="nav-link-text ms-1">Inquiry Tables</span>
                             </Link>
-                            <Link href="/employees" className="nav_link">
-                                <i className='bx bx-message-square-detail nav_icon'></i>
-                                <span className="nav_name">employees</span>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link " href="/">
+                                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i className="ni ni-credit-card text-success text-sm opacity-10"></i>
+                                </div>
+                                <span className="nav-link-text ms-1">Billing</span>
                             </Link>
-                            <Link href="#" className="nav_link">
-                                <i className='bx bx-bookmark nav_icon'></i>
-                                <span className="nav_name">Bookmark</span>
-                            </Link>
-                            <Link href="#" className="nav_link">
-                                <i className='bx bx-folder nav_icon'></i>
-                                <span className="nav_name">Files</span>
-                            </Link>
-                            <Link href="#" className="nav_link">
-                                <i className='bx bx-bar-chart-alt-2 nav_icon'></i>
-                                <span className="nav_name">Stats</span>
-                            </Link>
-                            <div>
-                                <Link href="#" className="nav_link"> <i className='bx bx-log-out nav_icon'></i> <span className="nav_name">SignOut</span> </Link>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </>
     )

@@ -1,17 +1,20 @@
-import AllScripts from '@/components/AllScripts'
-import Sidebar from '@/components/Sidebar'
-import '@/styles/globals.css'
-import Head from 'next/head'
+import AllScripts from "@/components/AllScripts";
+import "@/styles/globals.css";
+import Head from "next/head";
 export default function App({ Component, pageProps }) {
-  return Component.getLayout(
-  <>
-  <Head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
-  <link rel="stylesheet" href="css/sidebar.css" />
-  </Head>
-  <Component {...pageProps} />
-  <AllScripts/>
-  </>
-  )
+  return (
+    <>
+      <Head>
+        <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+        <link id="pagestyle"
+          href="../assets/css/argon-dashboard.css?v=2.0.4"
+          rel="stylesheet" />
+      </Head>
+      <Component {...pageProps} />
+      <AllScripts />
+    </>
+  );
 }
