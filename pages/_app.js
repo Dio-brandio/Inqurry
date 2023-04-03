@@ -12,6 +12,8 @@ export default function App({ Component, pageProps }) {
         <link id="pagestyle"
           href="../assets/css/argon-dashboard.css?v=2.0.4"
           rel="stylesheet" />
+        <script src="../js/jquery.js" ></script>
+
       </Head>
       <Component {...pageProps} />
       <AllScripts />
