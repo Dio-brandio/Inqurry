@@ -40,6 +40,3 @@ const checkCookieAndRedirect=async( role,ck)=>{
     }
 }
 
-export const config = {
-  matcher: ['/Admin','/login']
-}

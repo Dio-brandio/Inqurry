@@ -20,12 +20,6 @@ const Searchbar = () => {
               </div>
             </div>
             <ul className="navbar-nav ">
-              <li className="nav-item d-flex align-items-center">
-                <a href="" className="nav-link font-weight-bold px-0 text-white">
-                  <i className="ni ni-user me-sm-1"></i>
-                  <span className="d-sm-inline d-none">Sign In</span>
-                </a>
-              </li>
               <li className="nav-item  ps-3 d-flex align-items-center">
                 <a className="nav-link text-white p-0 cursor-pointer " id="iconNavbarSidenav">
                   <div className="sidenav-toggler-inner">

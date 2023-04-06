@@ -1,24 +1,59 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import  Cookies  from 'js-cookie'
+import Cookies from 'js-cookie'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+
+
 const Login = () => {
     const router = useRouter()
-    const handleLogin = async() => {
+    const handleLogin = async () => {
         const email = $('#email').val().toString()
         const password = $('#password').val().toString()
-        const res = await axios.post('http://localhost:3000/api/login',{email,password})
-        console.log(res);
-        if (res.status==200) {
-            console.log("nuce");
-            Cookies.set("authtoken", res.data.token)
-            router.push('/Admin')
+        if (email.length < 0 || password.length < 0) {
+            alert("Fill all the feilds")
+            return
         }
+
+        const res = await axios.post('http://localhost:3000/api/login', { email, password })
+        console.log(res);
+        if (res.data.ok) {
+            Cookies.set("authtoken", res.data.token)
+            toast.success('Login Successful!', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+                setTimeout(()=>{
+                    router.push('/Admin')
+                },1000)
+        } else {
+            alert(res.data.message)
+        }
+
+
 
     }
     return (
         <>
+            <ToastContainer
+               position="top-center"
+               autoClose={1000}
+               hideProgressBar
+               newestOnTop={false}
+               closeOnClick
+               rtl={false}
+               pauseOnFocusLoss
+               draggable
+               pauseOnHover
+               theme="colored"
+            />
             <main className="main-content mt-0 ps">
                 <section>
                     <div className="page-header min-vh-100">
@@ -29,11 +64,12 @@ const Login = () => {
                                         <div className="card-header pb-0 text-start">
                                             <h4 className="font-weight-bolder">Sign In</h4>
                                             <p className="mb-0">Enter your email and password to sign in</p>
+                                            admin@gmail.com
                                         </div>
                                         <div className="card-body">
                                             <form role="form">
                                                 <div className="mb-3">
-                                                    <input type="email" className="form-control form-control-lg" placeholder="Email" aria-label="Email" id='email' value='admin'/>
+                                                    <input type="email" className="form-control form-control-lg" placeholder="Email" aria-label="Email" id='email' />
                                                 </div>
                                                 <div className="mb-3">
                                                     <input type="password" className="form-control form-control-lg" placeholder="Password" aria-label="Password" id='password' />
@@ -44,7 +80,7 @@ const Login = () => {
                                                 </div>
                                             </form>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                                 <div className="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
