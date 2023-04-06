@@ -34,7 +34,16 @@ const Login = () => {
                     router.push('/Admin')
                 },1000)
         } else {
-            alert(res.data.message)
+            toast.error(res.data.message, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
 
 
