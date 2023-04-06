@@ -26942,4 +26942,9 @@ pre[class*="language-"] {
   }
 }
 
+.bg-image-login{
+  background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
+  background-size: cover;
+}
+
 /*# sourceMappingURL=dashboard-free.css.map */

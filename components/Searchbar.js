@@ -15,14 +15,14 @@ const Searchbar = () => {
           <div className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             <div className="ms-md-auto pe-md-3 d-flex align-items-center">
               <div className="input-group">
-                <span className="input-group-text text-body"><i className="fas fa-search"></i></span>
+                <span className="input-group-text text-body"><i className="ni ni-atom" ></i></span>
                 <input type="text" className="form-control" placeholder="Type here..." />
               </div>
             </div>
             <ul className="navbar-nav ">
               <li className="nav-item d-flex align-items-center">
                 <a href="" className="nav-link font-weight-bold px-0 text-white">
-                  <i className="fa fa-user me-sm-1"></i>
+                  <i className="ni ni-user me-sm-1"></i>
                   <span className="d-sm-inline d-none">Sign In</span>
                 </a>
               </li>
@@ -37,12 +37,10 @@ const Searchbar = () => {
               </li>
               <li className="nav-item px-3 d-flex align-items-center">
                 <a className="nav-link p-0 text-white">
-                  <i className="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
                 </a>
               </li>
               <li className="nav-item dropdown pe-2 d-flex align-items-center">
                 <a href="" className="nav-link p-0 text-white" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i className="fa fa-bell cursor-pointer"></i>
                 </a>
               </li>
             </ul>

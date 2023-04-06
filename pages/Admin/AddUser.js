@@ -26,7 +26,7 @@ const AddUser = () => {
 
                                 <div className="row">
 
-                                    <div className="col-3">
+                                    <div className="col-lg-3 col-sm-5 col-12 text-center">
 
                                         <div>
 
@@ -53,11 +53,11 @@ const AddUser = () => {
 
                                     </div>
 
-                                    <div className="col-9">
+                                    <div className="col-lg-9 col-12">
 
                                         <div className="row">
 
-                                            <div className="col-5 mb-3">
+                                            <div className="col-lg-5 mb-3">
 
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="">First name<span className="text-danger"> * </span></label>
@@ -66,7 +66,7 @@ const AddUser = () => {
 
                                             </div>
 
-                                            <div className="col-5 mb-3">
+                                            <div className="col-lg-5 mb-3">
 
                                                 <div className="form-outline">
 
@@ -78,7 +78,7 @@ const AddUser = () => {
 
                                             </div>
 
-                                            <div className="col-5 mb-3">
+                                            <div className="col-lg-5 mb-3">
 
                                                 <div className="form-outline">
 
@@ -90,7 +90,7 @@ const AddUser = () => {
 
                                             </div>
 
-                                            <div className="col-5 mb-3">
+                                            <div className="col-lg-5 mb-3">
 
                                                 <div className="dropdown ">
 
@@ -114,7 +114,7 @@ const AddUser = () => {
 
                                             </div>
 
-                                            <div className="col-5 mb-3">
+                                            <div className="col-lg-5 mb-3">
 
                                                 <div className="form-outline">
 
@@ -126,7 +126,7 @@ const AddUser = () => {
 
                                             </div>
 
-                                            <div className="col-5 mb-3">
+                                            <div className="col-lg-5 mb-3">
 
                                                 <div className="form-outline">
 
@@ -138,7 +138,7 @@ const AddUser = () => {
 
                                             </div>
 
-                                            <div className="col-5 mb-3">
+                                            <div className="col-lg-5 mb-3">
 
                                                 <div className="dropdown mx-0">
 

@@ -1,37 +1,42 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import  Cookies  from 'js-cookie'
+import axios from 'axios'
 const Login = () => {
-    const router  =  useRouter()
-    const handleLogin=()=>{
+    const router = useRouter()
+    const handleLogin = async() => {
         const email = $('#email').val().toString()
         const password = $('#password').val().toString()
-        if (email==='admin' && password==='123') {
-            console.log(email,password);
-            Cookies.set('authemail', email);
+        const res = await axios.post('http://localhost:3000/api/login',{email,password})
+        console.log(res);
+        if (res.status==200) {
+            console.log("nuce");
+            Cookies.set("authtoken", res.data.token)
             router.push('/Admin')
         }
+
     }
     return (
-        <div>
+        <>
             <main className="main-content mt-0 ps">
                 <section>
                     <div className="page-header min-vh-100">
                         <div className="container">
                             <div className="row">
-                                <div className="col-12 d-flex flex-column mx-lg-0 mx-auto">
+                                <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
                                     <div className="card card-plain">
                                         <div className="card-header pb-0 text-start">
                                             <h4 className="font-weight-bolder">Sign In</h4>
                                             <p className="mb-0">Enter your email and password to sign in</p>
                                         </div>
                                         <div className="card-body">
-                                            <form >
+                                            <form role="form">
                                                 <div className="mb-3">
-                                                    <input type="text" name='email' className="form-control form-control-lg" placeholder="Email" aria-label="Email" id='email'/>
+                                                    <input type="email" className="form-control form-control-lg" placeholder="Email" aria-label="Email" id='email' value='admin'/>
                                                 </div>
                                                 <div className="mb-3">
-                                                    <input type="password" name='password' className="form-control form-control-lg" placeholder="Password" aria-label="Password" id='password'/>
+                                                    <input type="password" className="form-control form-control-lg" placeholder="Password" aria-label="Password" id='password' />
                                                 </div>
 
                                                 <div className="text-center">
@@ -39,12 +44,14 @@ const Login = () => {
                                                 </div>
                                             </form>
                                         </div>
-                                        <div className="card-footer text-center pt-0 px-lg-2 px-1">
-                                            <p className="mb-4 text-sm mx-auto">
-                                                Don't have an account?
-                                                <Link href="/signup" className="text-primary text-gradient font-weight-bold">Sign up</Link>
-                                            </p>
-                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <div className="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                                    <div className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden bg-image-login">
+                                        <span className="mask bg-gradient-primary opacity-6"></span>
+                                        <h4 className="mt-5 text-white font-weight-bolder position-relative">"Attention is the new currency"</h4>
+                                        <p className="text-white position-relative">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +59,7 @@ const Login = () => {
                     </div>
                 </section>
             </main>
-        </div>
+        </>
     )
 }
 

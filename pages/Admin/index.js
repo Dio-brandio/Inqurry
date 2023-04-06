@@ -140,7 +140,7 @@ export default function Home() {
                     alt="image"
                   />
                   <div className="flex-grow-1 mb-0">
-                    <p className="fs-5mb-0">Tandel Nilkanth</p>
+                    <p className="fs-5mb-0">Lois griffin</p>
                   </div>
                 </div>
                 <div className="flex-grow-1 mb-3">
@@ -180,7 +180,7 @@ export default function Home() {
                     alt="image"
                   />
                   <div className="flex-grow-1 mb-0">
-                    <p className="fs-5mb-0">Tandel Nilkanth</p>
+                    <p className="fs-5mb-0">Lois griffin</p>
                   </div>
                 </div>
                 <div className="flex-grow-1 mb-3">
@@ -220,7 +220,7 @@ export default function Home() {
                     alt="image"
                   />
                   <div className="flex-grow-1 mb-0">
-                    <p className="fs-5mb-0">Tandel Nilkanth</p>
+                    <p className="fs-5mb-0">Lois griffin</p>
                   </div>
                 </div>
                 <div className="flex-grow-1 mb-3">
@@ -248,46 +248,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className=" col-lg-4 col-md-6 inquiry-card  p-3 ">
-            <div className="bg-white border border-dark-50 rounded px-4 py-1 ">
-              <div className="project-box">
-                <span className="badge badge-primary">Pending</span>
-                <h4>Website Designing</h4>
-                <div className="d-flex align-items-center my-3">
-                  <img
-                    className="img-10 me-2 w-25 rounded"
-                    src="../assets/img/team-1.jpg"
-                    alt="image"
-                  />
-                  <div className="flex-grow-1 mb-0">
-                    <p className="fs-5mb-0">Tandel Nilkanth</p>
-                  </div>
-                </div>
-                <div className="flex-grow-1 mb-3">
-                  <p className="mb-0">Nikol , Ahmedabad </p>
-                </div>
-                <hr className="hr bg-white" />
-                <p>
-                  Inqiury For webdesigning course and programming languages
-                </p>
-                <div className="row details">
-                  <div className="col-6">
-                    <span>Inquiry date </span>
-                  </div>
-                  <div className="col-6 font-primary">12/02/2023 </div>
-                  <div className="col-6">
-                    <span>Next Inquiry</span>
-                  </div>
-                  <div className="col-6 font-primary">19/02/2023</div>
-                  <div className="col-6">
-                    <span>Intrested</span>
-                  </div>
-                  <div className="col-6 font-primary">Yes</div>
-                </div>
-                <button className="btn btn-primary mt-3">Details</button>
-              </div>
-            </div>
-          </div>
+      
         </div>
       </Layout>
     </>
