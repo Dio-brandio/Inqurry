@@ -1,19 +1,35 @@
 import jwt from 'jsonwebtoken'
-export default async function checkCookie(token,role){
+export async function checkCookie(token,role){
     try{
-        const puretoken = token.split("authtoken")[1].split("=")[1]
-        if (puretoken!=null || puretoken !=undefined || puretoken.length<1) {
-            const verify =  jwt.verify(puretoken,process.env.JWT_SECRET)
+     
+        if (token!=null || token !=undefined || token.length<1) {
+            const verify =  jwt.verify(token,process.env.JWT_SECRET)
             if (verify.role==role) {
-                return true
+                return {
+                    verified:true,
+                    data:verify
+                }
             }else{
-                return false
+                return {
+                    verified:false,
+                    data:''
+                }
             }
         }else{
-            return false
+            return {
+                verified:false,
+                data:''
+            }
         }
     }
     catch(err){
-        return false
+        return {
+            verified:false,
+            data:err.message
+        }
     }
+}
+
+export function splitToken(header){
+    return header.split("authtoken=")[1]
 }

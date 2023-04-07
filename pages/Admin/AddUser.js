@@ -2,10 +2,8 @@ import Layout from '@/components/Layout'
 import Head from 'next/head'
 import React from 'react'
 
-const AddUser = () => {
-    const addUser = async () => {
-
-    }
+const AdminAddUser = () => {
+ const addUserApi = 'http://localhost:3000/api/addUser'
     return (<>
         <Head>
             <title> Add User</title>
@@ -18,7 +16,7 @@ const AddUser = () => {
                             <h3 className="mb-0">Add User</h3>
                         </div>
                         <div className="card-body pt-4 p-3">
-                            <form className="form-card" action='http://localhost:3000/api/addUser' method='post'>
+                            <form className="form-card">
                                 <div className="row">
                                     <div className="col-lg-3 col-sm-5 col-12 text-center">
                                         <div>
@@ -91,8 +89,8 @@ const AddUser = () => {
                                                     <div><label className="form-label" htmlFor="form6Example2">Role<span className="text-danger">* </span></label>
                                                     </div>
                                                     <select className="form-select" aria-label="Default select example" name='role' required>
-                                                        <option defaultValue value="Employee">Employee</option>
-                                                        <option value="Mangaer">Manager</option>
+                                                        <option defaultValue value="employee">Employee</option>
+                                                        <option value="manager">Manager</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -116,4 +114,4 @@ const AddUser = () => {
     )
 }
 
-export default AddUser
+export default AdminAddUser

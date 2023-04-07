@@ -15,36 +15,48 @@ const Login = () => {
             alert("Fill all the feilds")
             return
         }
-
-        const res = await axios.post('http://localhost:3000/api/login', { email, password })
-        console.log(res);
-        if (res.data.ok) {
-            Cookies.set("authtoken", res.data.token)
-            toast.success('Login Successful!', {
-                position: "top-center",
-                autoClose: 1000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-                setTimeout(()=>{
-                    router.push('/Admin')
-                },1000)
-        } else {
-            toast.error(res.data.message, {
-                position: "top-center",
-                autoClose: 1000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
+try {
+    const res = await axios.post('http://localhost:3000/api/login', { email, password })
+    if (res.data.ok) {
+        Cookies.set("authtoken", res.data.token)
+        toast.success('Login Successful!', {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+            setTimeout(()=>{
+                router.push('/Admin')
+            },1000)
+    } else {
+        toast.error(res.data.message, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
+} catch (error) {
+    toast.error("There Is Some Error In Server Side "+error.message , {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+}
+       
 
 
 

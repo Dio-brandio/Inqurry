@@ -1,8 +1,7 @@
 import Layout from "@/components/Layout";
-import Searchbar from "@/components/Searchbar";
 import Head from "next/head";
 
-export default function Home() {
+export default function AdminHome() {
   return (
     <>
       <Head>

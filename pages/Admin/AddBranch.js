@@ -2,7 +2,7 @@ import Layout from '@/components/Layout'
 import Head from 'next/head'
 import React from 'react'
 
-const AddBranch = () => {
+const AdminAddBranch = () => {
     return (
         <>
             <Head>
@@ -61,4 +61,4 @@ const AddBranch = () => {
     )
 }
 
-export default AddBranch
+export default AdminAddBranch

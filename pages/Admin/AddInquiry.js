@@ -2,7 +2,7 @@ import Layout from '@/components/Layout'
 import Head from 'next/head'
 import React from 'react'
 
-const AddInquiry = () => {
+const AdminAddInquiry = () => {
     return (
         <>
             <Head>
@@ -10,29 +10,18 @@ const AddInquiry = () => {
             </Head>
             <Layout>
                 <div className="row">
-
                     <div className="col">
-
                         <div className="card">
-
                             <div className="card-header text-center pb-0 px-3">
-
                                 <h3 className="mb-0">Add Inquiry</h3>
-
                             </div>
 
                             <div className="card-body pt-4 p-3">
-
                                 <form className="form-card">
-
                                     <div className="row">
-
                                         <div className="col-3">
-
                                             <div>
-
                                                 <label className="form-label d-flex justify-content-center mt-2" htmlFor="form6Example1">Id Proof
-
                                                     Photo</label>
 
                                                 <div className="d-flex justify-content-center mt-0 mb-4">
@@ -228,4 +217,4 @@ const AddInquiry = () => {
     )
 }
 
-export default AddInquiry
+export default AdminAddInquiry
