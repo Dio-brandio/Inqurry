@@ -1,8 +1,10 @@
 import Layout from '@/components/Layout'
 import Head from 'next/head'
-import React from 'react'
 
-const AdminAddBranch = () => {
+const AdminAddBranch = ({isAdmin}) => {
+   
+   
+    
     return (
         <>
             <Head>
@@ -51,7 +53,7 @@ const AdminAddBranch = () => {
                                         <div className="form-outline d-flex  justify-content-center col-12 ">
                                             <button type="submit" className="btn btn-lg btn-primary  btn-block mb-4">Submit</button>
                                         </div>
-                                    </form>
+                                    </form> 
                                 </div>
                             </div>
                         </div>

@@ -10,7 +10,7 @@ export default async function middleware(req) {
   const isEmployee=await checkCookieAndRedirect("employee",ck)
   const userPath=isAdmin?"Admin":isManager?"Manager":"Employee"
 
-  if (req.nextUrl.pathname.startsWith('/Admin') ) {
+  if (req.nextUrl.pathname.startsWith('/Admin')) {
     if (!isAdmin) {
       return NextResponse.redirect(new URL("/login",req.url))
     }

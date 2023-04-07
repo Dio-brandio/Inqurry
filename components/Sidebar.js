@@ -5,14 +5,14 @@ import React from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 
 const Sidebar = () => {
-    const router = useRouter()
-    const isAdmin=router.pathname.includes("/Admin")
-    const isManager=router.pathname.includes("/Manager")
-    const userPath=isAdmin?"Admin":isManager?"Manager":"Employee"
 
+    const router = useRouter()
+    const isAdmin = router.pathname.includes("/Admin")
+    const isManager = router.pathname.includes("/Manager")
+    const userPath = isAdmin ? "Admin" : isManager ? "Manager" : "Employee"
     const logout = () => {
         Cookies.remove("authtoken")
-        toast.error('Logged Out', {
+        toast.error('Logging Out', {
             position: "top-center",
             autoClose: 1000,
             hideProgressBar: false,
@@ -21,10 +21,10 @@ const Sidebar = () => {
             draggable: true,
             progress: undefined,
             theme: "colored",
-            });
-            setTimeout(() => {
-                router.push('/login')
-            }, 1000);
+        });
+        setTimeout(() => {
+            router.push('/login')
+        }, 1000);
     }
     return (
         <>
@@ -68,23 +68,23 @@ const Sidebar = () => {
                                 <span className="nav-link-text ms-1">Add Inquiry</span>
                             </Link>
                         </li>
-                        { isAdmin?<li className="nav-item text-center">
+                        {isAdmin ? <li className="nav-item text-center">
                             <Link className="nav-link " href={`/${userPath}/AddBranch`}>
                                 <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i className="ni ni-fat-add text-success text-sm opacity-10"></i>
                                 </div>
                                 <span className="nav-link-text ms-1">Add Branch</span>
                             </Link>
-                        </li>:null}
-                        
-                        {isAdmin||isManager?<li className="nav-item text-center">
+                        </li> : null}
+
+                        {isAdmin || isManager ? <li className="nav-item text-center">
                             <Link className="nav-link " href={`/${userPath}/AddUser`}>
                                 <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i className="ni ni-fat-add text-success text-sm opacity-10"></i>
                                 </div>
                                 <span className="nav-link-text ms-1">Add User</span>
                             </Link>
-                        </li>:null}
+                        </li> : null}
                         <li className="nav-item text-center my-5">
                             <button className="btn btn-danger " onClick={logout}>
                                 <span className="nav-link-text ms-1">Logout</span>

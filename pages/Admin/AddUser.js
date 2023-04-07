@@ -1,14 +1,126 @@
+import React,{ useState,useEffect } from 'react'
 import Layout from '@/components/Layout'
+import axios from 'axios';
 import Head from 'next/head'
-import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import Cookies from "js-cookie";
 
-const AdminAddUser = () => {
- const addUserApi = 'http://localhost:3000/api/addUser'
+
+const allBranchApi = 'http://localhost:3000/api/getAllBranches';
+const addUserApi = 'http://localhost:3000/api/addUser';
+const AdminAddUser = ({ isAdmin ,branches,token}) => {
+    const [allbranches, setAllBranches] = useState([])
+    useEffect(() => {
+     fetch(allBranchApi,{
+        headers:{
+            "Content-Type": "application/json",
+            "cookie":"authtoken="+Cookies.get("authtoken")
+        }
+     }).then((p)=>p.json()).
+     then((data)=>{
+        if (data.ok) {
+            setAllBranches(data.branches)
+        }
+    }) 
+    }, [])
+    console.log(allbranches);
+    
+    const addUserApiCall =async () => {
+        if (!formValidation()) {
+            console.log("renders");
+            toast.warn('Fill All The Required Values !', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return
+        }
+        const fname = $("#fname").val()
+        const lname = $("#lname").val()
+        const contact= $("#contact").val()
+        const branchid= $("#branchid").val()
+        const emial= $("#emial").val()
+        const password= $("#password").val()
+        const role= $("#role").val()
+        const res =await axios.post(addUserApi, {fname,
+            lname,
+            contact,
+            branchid,
+            emial,
+            password,
+            role})
+        try {
+            if (res.data.ok) {
+                toast.success(res.data.message, {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            } else {
+                toast.error(res.data.message, {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }
+        } catch (error) {
+            toast.error("There Is Some Error In Server Side "+error.message , {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
+
+    const formValidation = () => {
+        $.each($("#adduserForm input"), function (indexInArray, ele) {
+            if (ele.type == "text" || ele.type == "email" || ele.type == "password" || ele.type == "number") {
+                if ($(ele).val() == null || $(ele).val() == '' || $(ele).val() == ' ' || $(ele).val() == undefined) {
+                    return false
+                }
+            }
+            return true
+        });
+    }
+
     return (<>
         <Head>
             <title> Add User</title>
         </Head>
         <Layout>
+        <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            limit={1}
+            hideProgressBar
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable
+            pauseOnHover
+            theme="colored"
+        />
             <div className="row">
                 <div className="col">
                     <div className="card">
@@ -16,7 +128,7 @@ const AdminAddUser = () => {
                             <h3 className="mb-0">Add User</h3>
                         </div>
                         <div className="card-body pt-4 p-3">
-                            <form className="form-card">
+                            <form className="form-card" id='adduserForm'>
                                 <div className="row">
                                     <div className="col-lg-3 col-sm-5 col-12 text-center">
                                         <div>
@@ -46,14 +158,14 @@ const AdminAddUser = () => {
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="form6Example2">Last name<span className="text-danger"> * </span></label>
-                                                    <input type="text" id="form6Example2" className="form-control" name='lname' required />
+                                                    <input type="text" id="lname" className="form-control" name='lname' required />
                                                 </div>
                                             </div>
 
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="form6Example2">Mobile<span className="text-danger"> * </span></label>
-                                                    <input type="text" id="form6Example3" className="form-control" />
+                                                    <input type="text" id="contact" className="form-control" />
                                                 </div>
                                             </div>
 
@@ -61,11 +173,11 @@ const AdminAddUser = () => {
                                                 <div className="dropdown ">
                                                     <div><label className="form-label" htmlFor="form6Example2">Branch<span className="text-danger">* </span></label>
                                                     </div>
-                                                    <select className="form-select" aria-label="Default select example" name='branchid'>
+                                                    <select className="form-select" aria-label="Default select example" name='branchid' id='branchid'>
                                                         <option defaultChecked>---Select---</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        {allbranches.length>=1?allbranches.map((branch)=>{
+                                                            return <option value={branch.id} key={branch.id}>{branch.branchname}</option>
+                                                        }):null}
                                                     </select>
                                                 </div>
                                             </div>
@@ -73,14 +185,14 @@ const AdminAddUser = () => {
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="">Email<span className="text-danger"> * </span></label>
-                                                    <input type="email" id="" className="form-control" name='email' required/>
+                                                    <input type="email" id="email" className="form-control" name='email' required />
                                                 </div>
                                             </div>
 
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="">Password<span className="text-danger"> * </span></label>
-                                                    <input type="password" id="" className="form-control" name='password' required/>
+                                                    <input type="password" id="password" className="form-control" name='password' required />
                                                 </div>
                                             </div>
 
@@ -88,16 +200,16 @@ const AdminAddUser = () => {
                                                 <div className="dropdown mx-0">
                                                     <div><label className="form-label" htmlFor="form6Example2">Role<span className="text-danger">* </span></label>
                                                     </div>
-                                                    <select className="form-select" aria-label="Default select example" name='role' required>
+                                                    <select className="form-select" aria-label="Default select example" name='role' id='role' required>
                                                         <option defaultValue value="employee">Employee</option>
-                                                        <option value="manager">Manager</option>
+                                                        {isAdmin ? <option value="manager">Manager</option> : null}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="col mt-2">
                                                     <div className="">
-                                                        <button type="submit"  className="btn btn-primary btn-block mb-4">Submit</button>
+                                                        <button type="button" onClick={addUserApiCall} className="btn btn-primary btn-block mb-4">Submit</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,8 +222,10 @@ const AdminAddUser = () => {
                 </div>
             </div>
         </Layout>
+        
     </>
     )
 }
 
 export default AdminAddUser
+

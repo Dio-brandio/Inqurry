@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import Cookies from 'js-cookie'
@@ -19,7 +18,7 @@ try {
     const res = await axios.post('http://localhost:3000/api/login', { email, password })
     if (res.data.ok) {
         Cookies.set("authtoken", res.data.token)
-        toast.success('Login Successful!', {
+        toast.success('Login In!', {
             position: "top-center",
             autoClose: 1000,
             hideProgressBar: false,
