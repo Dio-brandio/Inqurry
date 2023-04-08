@@ -4,31 +4,32 @@ import axios from 'axios';
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify';
 import Cookies from "js-cookie";
-
+import { checkCookieAndRedirect } from '@/middleware';
 
 const allBranchApi = 'http://localhost:3000/api/getAllBranches';
 const addUserApi = 'http://localhost:3000/api/addUser';
-const AdminAddUser = ({ isAdmin ,branches,token}) => {
-    const [allbranches, setAllBranches] = useState([])
+
+const AdminAddUser = ({isAdmin}) => {
+const [allbranches, setAllBranches] = useState([])
+
     useEffect(() => {
-     fetch(allBranchApi,{
+        console.log("useeffect from app");
+    fetch(allBranchApi,{
         headers:{
             "Content-Type": "application/json",
             "cookie":"authtoken="+Cookies.get("authtoken")
         }
-     }).then((p)=>p.json()).
-     then((data)=>{
+    }).then((p)=>p.json()).
+    then((data)=>{
         if (data.ok) {
             setAllBranches(data.branches)
         }
     }) 
     }, [])
-    console.log(allbranches);
-    
+
     const addUserApiCall =async () => {
         if (!formValidation()) {
-            console.log("renders");
-            toast.warn('Fill All The Required Values !', {
+                toast.warn('Fill All The Required Values !', {
                 position: "top-center",
                 autoClose: 1000,
                 hideProgressBar: true,
@@ -44,14 +45,14 @@ const AdminAddUser = ({ isAdmin ,branches,token}) => {
         const lname = $("#lname").val()
         const contact= $("#contact").val()
         const branchid= $("#branchid").val()
-        const emial= $("#emial").val()
+        const email= $("#email").val()
         const password= $("#password").val()
         const role= $("#role").val()
         const res =await axios.post(addUserApi, {fname,
             lname,
             contact,
             branchid,
-            emial,
+            email,
             password,
             role})
         try {
@@ -66,6 +67,7 @@ const AdminAddUser = ({ isAdmin ,branches,token}) => {
                     progress: undefined,
                     theme: "colored",
                 });
+                $("#adduserForm").trigger("reset")
             } else {
                 toast.error(res.data.message, {
                     position: "top-center",
@@ -93,14 +95,16 @@ const AdminAddUser = ({ isAdmin ,branches,token}) => {
     }
 
     const formValidation = () => {
-        $.each($("#adduserForm input"), function (indexInArray, ele) {
+        for (let i = 0; i < $("#adduserForm input").length; i++) {
+            const ele = $("#adduserForm input")[i];
             if (ele.type == "text" || ele.type == "email" || ele.type == "password" || ele.type == "number") {
                 if ($(ele).val() == null || $(ele).val() == '' || $(ele).val() == ' ' || $(ele).val() == undefined) {
+                    ele.focus()
                     return false
                 }
             }
-            return true
-        });
+        }
+        return true
     }
 
     return (<>
@@ -174,9 +178,8 @@ const AdminAddUser = ({ isAdmin ,branches,token}) => {
                                                     <div><label className="form-label" htmlFor="form6Example2">Branch<span className="text-danger">* </span></label>
                                                     </div>
                                                     <select className="form-select" aria-label="Default select example" name='branchid' id='branchid'>
-                                                        <option defaultChecked>---Select---</option>
                                                         {allbranches.length>=1?allbranches.map((branch)=>{
-                                                            return <option value={branch.id} key={branch.id}>{branch.branchname}</option>
+                                                            return <option value={branch.id} key={branch.id}>{branch.name}</option>
                                                         }):null}
                                                     </select>
                                                 </div>

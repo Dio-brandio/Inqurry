@@ -1,7 +1,15 @@
+import React,{useEffect,useState} from 'react'
 import Layout from "@/components/Layout";
 import Head from "next/head";
+import axios from 'axios';
 
-export default function AdminHome() {
+const allInquiresApi = 'http://localhost:3000/api/getAllInquires'
+export default function AdminHome(props) {
+  const [allInquies, setAllInquies] = useState(false)
+
+  useEffect(() => {
+    axios.get(allInquiresApi).then((data)=>setAllInquies( data.data.inquires))
+  }, [])
   return (
     <>
       <Head>
@@ -127,127 +135,46 @@ export default function AdminHome() {
           </div>
         </div>
         <div className="row p-3">
-          <div className=" col-lg-4 col-md-6 inquiry-card  p-3 ">
+          {allInquies?allInquies.length>0?allInquies.map((item)=>{
+            return <div className=" col-lg-4 col-md-6 inquiry-card  p-3 " key={item.id}>
             <div className="bg-white border border-dark-50 rounded px-4 py-1 ">
               <div className="project-box">
                 <span className="badge badge-primary">Pending</span>
-                <h4>Website Designing</h4>
+                <h4>{item.course.toUpperCase()}</h4>
                 <div className="d-flex align-items-center my-3">
-                  <img
-                    className="img-10 me-2 w-25 rounded"
+                  <img className="img-10 me-2 w-25 rounded"
                     src="../assets/img/team-1.jpg"
-                    alt="image"
-                  />
+                    alt="image"/>
                   <div className="flex-grow-1 mb-0">
-                    <p className="fs-5mb-0">Lois griffin</p>
+                    <p className="fs-5mb-0">{item.fname} {item.lname}</p>
                   </div>
                 </div>
                 <div className="flex-grow-1 mb-3">
-                  <p className="mb-0">Nikol , Ahmedabad </p>
+                  <p className="mb-0">{item.branchname}</p>
                 </div>
                 <hr className="hr bg-white" />
                 <p>
-                  Inqiury For webdesigning course and programming languages
+                  {item.feedback}
                 </p>
                 <div className="row details">
                   <div className="col-6">
                     <span>Inquiry date </span>
                   </div>
-                  <div className="col-6 font-primary">12/02/2023 </div>
+                  <div className="col-6 font-primary">{item.inquiry_date.split('T')[0]} </div>
                   <div className="col-6">
                     <span>Next Inquiry</span>
                   </div>
-                  <div className="col-6 font-primary">19/02/2023</div>
+                  <div className="col-6 font-primary">{item.upcoming_date.split('T')[0]} </div>
                   <div className="col-6">
                     <span>Intrested</span>
                   </div>
-                  <div className="col-6 font-primary">Yes</div>
+                  <div className="col-6 font-primary">{item.intrested}</div>
                 </div>
                 <button className="btn btn-primary mt-3">Details</button>
               </div>
             </div>
           </div>
-          <div className=" col-lg-4 col-md-6 inquiry-card  p-3 ">
-            <div className="bg-white border border-dark-50 rounded px-4 py-1 ">
-              <div className="project-box">
-                <span className="badge badge-primary">Pending</span>
-                <h4>Website Designing</h4>
-                <div className="d-flex align-items-center my-3">
-                  <img
-                    className="img-10 me-2 w-25 rounded"
-                    src="../assets/img/team-1.jpg"
-                    alt="image"
-                  />
-                  <div className="flex-grow-1 mb-0">
-                    <p className="fs-5mb-0">Lois griffin</p>
-                  </div>
-                </div>
-                <div className="flex-grow-1 mb-3">
-                  <p className="mb-0">Nikol , Ahmedabad </p>
-                </div>
-                <hr className="hr bg-white" />
-                <p>
-                  Inqiury For webdesigning course and programming languages
-                </p>
-                <div className="row details">
-                  <div className="col-6">
-                    <span>Inquiry date </span>
-                  </div>
-                  <div className="col-6 font-primary">12/02/2023 </div>
-                  <div className="col-6">
-                    <span>Next Inquiry</span>
-                  </div>
-                  <div className="col-6 font-primary">19/02/2023</div>
-                  <div className="col-6">
-                    <span>Intrested</span>
-                  </div>
-                  <div className="col-6 font-primary">Yes</div>
-                </div>
-                <button className="btn btn-primary mt-3">Details</button>
-              </div>
-            </div>
-          </div>
-          <div className=" col-lg-4 col-md-6 inquiry-card  p-3 ">
-            <div className="bg-white border border-dark-50 rounded px-4 py-1 ">
-              <div className="project-box">
-                <span className="badge badge-primary">Pending</span>
-                <h4>Website Designing</h4>
-                <div className="d-flex align-items-center my-3">
-                  <img
-                    className="img-10 me-2 w-25 rounded"
-                    src="../assets/img/team-1.jpg"
-                    alt="image"
-                  />
-                  <div className="flex-grow-1 mb-0">
-                    <p className="fs-5mb-0">Lois griffin</p>
-                  </div>
-                </div>
-                <div className="flex-grow-1 mb-3">
-                  <p className="mb-0">Nikol , Ahmedabad </p>
-                </div>
-                <hr className="hr bg-white" />
-                <p>
-                  Inqiury For webdesigning course and programming languages
-                </p>
-                <div className="row details">
-                  <div className="col-6">
-                    <span>Inquiry date </span>
-                  </div>
-                  <div className="col-6 font-primary">12/02/2023 </div>
-                  <div className="col-6">
-                    <span>Next Inquiry</span>
-                  </div>
-                  <div className="col-6 font-primary">19/02/2023</div>
-                  <div className="col-6">
-                    <span>Intrested</span>
-                  </div>
-                  <div className="col-6 font-primary">Yes</div>
-                </div>
-                <button className="btn btn-primary mt-3">Details</button>
-              </div>
-            </div>
-          </div>
-      
+          }):null:<h1>Loding...</h1>}
         </div>
       </Layout>
     </>

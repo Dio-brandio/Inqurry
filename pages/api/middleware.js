@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 export async function checkCookie(token,role){
     try{
      
-        if (token!=null || token !=undefined || token.length<1) {
+        if (token && token!=null || token !=undefined || token.length>1 ) {
             const verify =  jwt.verify(token,process.env.JWT_SECRET)
             if (verify.role==role) {
                 return {
@@ -15,7 +15,7 @@ export async function checkCookie(token,role){
                     data:''
                 }
             }
-        }else{
+        }else if (!token) {
             return {
                 verified:false,
                 data:''
@@ -31,5 +31,8 @@ export async function checkCookie(token,role){
 }
 
 export function splitToken(header){
+    if (header==null || header==undefined || header=='' || !header.includes('authtoken')) {
+        return false
+    }
     return header.split("authtoken=")[1]
 }

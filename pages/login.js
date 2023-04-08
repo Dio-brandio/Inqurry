@@ -16,6 +16,7 @@ const Login = () => {
         }
 try {
     const res = await axios.post('http://localhost:3000/api/login', { email, password })
+    console.log(res);
     if (res.data.ok) {
         Cookies.set("authtoken", res.data.token)
         toast.success('Login In!', {
@@ -84,7 +85,9 @@ try {
                                         <div className="card-header pb-0 text-start">
                                             <h4 className="font-weight-bolder">Sign In</h4>
                                             <p className="mb-0">Enter your email and password to sign in</p>
-                                            admin@gmail.com
+                                            Admin:admin@gmail.com
+                                            Manager:mohit@managernikol
+                                            employee:mukesh@employee
                                         </div>
                                         <div className="card-body">
                                             <form role="form">

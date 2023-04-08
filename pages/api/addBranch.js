@@ -1,29 +1,25 @@
 import { splitToken ,checkCookie} from "./middleware"
 const query = require('./dbconnect')
 export default async function handler(req, res) {
+    
     const token = splitToken(req.headers.cookie)
     const isAdmin = await checkCookie(token, "admin");
-    const isManager = await checkCookie(token, "manager");
     
     if (req.method !== 'POST' || !req.body || !token ) {
         return res.status(403).json({ message: 'Bad request', ok: false })
     }
-    if ( !isAdmin.verified && !isManager.verified ) {
+    if ( !isAdmin.verified ) {
         return res.status(401).json({ message: 'Not Authenticated', ok: false })
     }
     try {
-        const created_by = Number(isAdmin.verified?isAdmin.data.uid:isManager.verified?isManager.data.uid:null)
-        const { email, password, fname, lname, branchid, role ,contact} = req.body
+        const { email, address, name ,contact} = req.body
         
-        const rowcount = await query(`insert into users (email,password,fname,lname,branchid,role,created_by,contact)
+        const rowcount = await query(`INSERT INTO branch( email,name, contact, address) 
             values('${email.toString()}',
-            '${password.toString()}',
-            '${fname.toString()}',
-            '${lname.toString()}',
-            '${Number(branchid)}',
-            '${role.toString()}',
-            '${created_by}',
-            '${contact}')`)
+            '${name.toString()}',
+            '${contact.toString()}',
+            '${address.toString()}')`)
+            
             if (rowcount.affectedRows==1) {
                 return res.status(200).json({ message: 'Successfully Created', ok: true })
             }else{
