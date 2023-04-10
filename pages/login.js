@@ -16,7 +16,6 @@ const Login = () => {
         }
 try {
     const res = await axios.post('http://localhost:3000/api/login', { email, password })
-    console.log(res);
     if (res.data.ok) {
         Cookies.set("authtoken", res.data.token)
         toast.success('Login In!', {

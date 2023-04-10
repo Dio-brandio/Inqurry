@@ -36,3 +36,6 @@ export function splitToken(header){
     }
     return header.split("authtoken=")[1]
 }
+export function checkDate(start,end){
+    return new Date(start) > new Date(end)
+}

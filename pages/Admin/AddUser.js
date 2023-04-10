@@ -1,35 +1,19 @@
-import React,{ useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '@/components/Layout'
 import axios from 'axios';
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify';
 import Cookies from "js-cookie";
 import { checkCookieAndRedirect } from '@/middleware';
+import { extractDataFeilds } from '@/middleware';
 
-const allBranchApi = 'http://localhost:3000/api/getAllBranches';
 const addUserApi = 'http://localhost:3000/api/addUser';
 
-const AdminAddUser = ({isAdmin}) => {
-const [allbranches, setAllBranches] = useState([])
-
-    useEffect(() => {
-        console.log("useeffect from app");
-    fetch(allBranchApi,{
-        headers:{
-            "Content-Type": "application/json",
-            "cookie":"authtoken="+Cookies.get("authtoken")
-        }
-    }).then((p)=>p.json()).
-    then((data)=>{
-        if (data.ok) {
-            setAllBranches(data.branches)
-        }
-    }) 
-    }, [])
-
-    const addUserApiCall =async () => {
+const AdminAddUser = ({ isAdmin,allbranches }) => {
+    
+    const addUserApiCall = async () => {
         if (!formValidation()) {
-                toast.warn('Fill All The Required Values !', {
+            toast.warn('Fill All The Required Values !', {
                 position: "top-center",
                 autoClose: 1000,
                 hideProgressBar: true,
@@ -41,20 +25,8 @@ const [allbranches, setAllBranches] = useState([])
             });
             return
         }
-        const fname = $("#fname").val()
-        const lname = $("#lname").val()
-        const contact= $("#contact").val()
-        const branchid= $("#branchid").val()
-        const email= $("#email").val()
-        const password= $("#password").val()
-        const role= $("#role").val()
-        const res =await axios.post(addUserApi, {fname,
-            lname,
-            contact,
-            branchid,
-            email,
-            password,
-            role})
+        const formData = extractDataFeilds($("#extractDataFeilds").serializeArray())
+        const res = await axios.post(addUserApi, formData)
         try {
             if (res.data.ok) {
                 toast.success(res.data.message, {
@@ -81,7 +53,7 @@ const [allbranches, setAllBranches] = useState([])
                 });
             }
         } catch (error) {
-            toast.error("There Is Some Error In Server Side "+error.message , {
+            toast.error("There Is Some Error In Server Side " + error.message, {
                 position: "top-center",
                 autoClose: 1000,
                 hideProgressBar: true,
@@ -112,19 +84,19 @@ const [allbranches, setAllBranches] = useState([])
             <title> Add User</title>
         </Head>
         <Layout>
-        <ToastContainer
-            position="top-center"
-            autoClose={1000}
-            limit={1}
-            hideProgressBar
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable
-            pauseOnHover
-            theme="colored"
-        />
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                limit={1}
+                hideProgressBar
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <div className="row">
                 <div className="col">
                     <div className="card">
@@ -178,9 +150,9 @@ const [allbranches, setAllBranches] = useState([])
                                                     <div><label className="form-label" htmlFor="form6Example2">Branch<span className="text-danger">* </span></label>
                                                     </div>
                                                     <select className="form-select" aria-label="Default select example" name='branchid' id='branchid'>
-                                                        {allbranches.length>=1?allbranches.map((branch)=>{
+                                                        {allbranches?allbranches.length>=1?allbranches.map((branch)=>{
                                                             return <option value={branch.id} key={branch.id}>{branch.name}</option>
-                                                        }):null}
+                                                        }):<p>No branches</p>:<option>Loading</option>}
                                                     </select>
                                                 </div>
                                             </div>
@@ -225,7 +197,7 @@ const [allbranches, setAllBranches] = useState([])
                 </div>
             </div>
         </Layout>
-        
+
     </>
     )
 }

@@ -1,4 +1,4 @@
-import { splitToken ,checkCookie} from "./middleware"
+import { splitToken ,checkCookie, checkDate} from "./middleware"
 const query = require('./dbconnect')
 export default async function handler(req, res) {
     
@@ -8,16 +8,18 @@ export default async function handler(req, res) {
     const isEmployee = await checkCookie(token, "employee");
 
     
-    if (req.method !== 'POST' || !token || !req.body) {
+    if (req.method !== 'POST' ||  !req.body) {
         return res.status(403).json({ message: 'Bad request', ok: false })
     }
-    if (!isAdmin.verified && !isManager.verified && !isEmployee.verified) {
+    if (!token || (!isAdmin.verified && !isManager.verified && !isEmployee.verified)) {
         return res.status(401).json({ message: 'Not Authenticated', ok: false })
     }
     
     try {
         const { fname,lname,email,contact,refrence,branchid,inquiry_date,upcoming_date,course,feedback,intrested} = req.body
-
+     if(checkDate(inquiry_date,upcoming_date)){
+        return res.status(403).json({ message: 'Bad request', ok: false })
+     }
         let addedBy;
         if (isAdmin.verified) {
             addedBy=isAdmin.data.uid
@@ -46,7 +48,6 @@ export default async function handler(req, res) {
             '${Number(addedBy)}',
             '${intrested.toString()}')`)
 
-                
             if (rowcount.affectedRows==1) {
                 return res.status(200).json({ message: 'Successfully Added', ok: true })
             }else{

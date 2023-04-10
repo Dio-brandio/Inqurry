@@ -9,22 +9,22 @@ export default async function handler(req, res) {
 
     
     if ( !isAdmin.verified && !isManager.verified && !isEmployee.verified) {
-        return res.status(401).json({ message: 'Not Authenticated', ok: false })
+        return res.status(200).json({ message: 'Not Authenticated', ok: false })
     }
     if (req.method !== 'GET' || !token ) {
         return res.status(403).json({ message: 'Bad request', ok: false })
     }
     try {
         if (isAdmin.verified) {
-            const branches = await query(`select * from branch`)
+            const branches = await query(`call getAllBranchesByBranchId(null)`)
             return res.status(200).json({ branches: branches, ok: true })
         }
         if (isManager.verified) {
-            const branches = await query(`select * from branch where id='${isManager.data.branchid}'`)
+            const branches = await query(`call getAllBranchesByBranchId(${isManager.data.branchid})`)
             return res.status(200).json({ branches: branches, ok: true })
         }
         if (isEmployee.verified) {
-            const branches = await query(`select * from branch where id='${isEmployee.data.branchid}'`)
+            const branches = await query(`call getAllBranchesByBranchId(${isEmployee.data.branchid})`)
             return res.status(200).json({ branches: branches, ok: true })
         }
        

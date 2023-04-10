@@ -16,15 +16,15 @@ export default async function handler(req, res) {
     }
     try {
         if (isAdmin.verified) {
-            const inquires = await query(`select i.*,b.name as branchname from inquires i inner join branch b on b.id=i.branch`)
+            const inquires = await query(`call getAllInquiresByBranchId(null)`)
             return res.status(200).json({ inquires: inquires, ok: true })
         }
         if (isManager.verified) {
-            const inquires = await query(`select i.*,b.name as branchname from inquires i inner join branch b on b.id=i.branch where branch='${isManager.data.branchid}'`)
+            const inquires = await query(`call getAllInquiresByBranchId(${isManager.data.branchid})`)
             return res.status(200).json({ inquires: inquires, ok: true })
         }
         if (isEmployee.verified) {
-            const inquires = await query(`select i.*,b.name as branchname from inquires i inner join branch b on b.id=i.branch where branch='${isEmployee.data.branchid}'`)
+            const inquires = await query(`call getAllInquiresByBranchId(${isEmployee.data.branchid})`)
             return res.status(200).json({ inquires: inquires, ok: true })
         }
        

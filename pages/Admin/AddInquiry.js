@@ -8,36 +8,13 @@ import { extractDataFeilds } from '@/middleware'
 import axios from 'axios'
 
 
-const allBranchApi = 'http://localhost:3000/api/getAllBranches';
 const addInquiryApi = 'http://localhost:3000/api/addInquiry';
 
-const AdminAddInquiry = ({ token }) => {
-    const [user, setUser] = useState(null)
-    const [allbranches, setAllBranches] = useState([])
-
-    useEffect(() => {
-        jwtVerify(Cookies.get('authtoken'), new TextEncoder().encode(process.env.JWT_SECRET)).
-            then((data) => setUser(data.payload))
-    }, [])
-
-    useEffect(() => {
-        fetch(allBranchApi, {
-            headers: {
-                "Content-Type": "application/json",
-                "cookie": "authtoken=" + Cookies.get("authtoken")
-            }
-        }).then((p) => p.json()).
-            then((data) => {
-                if (data.ok) {
-                    setAllBranches(data.branches)
-                }
-            })
-    }, [])
+const AdminAddInquiry = ({allbranches}) => {
+   
 
     const addInquiryApiCall = async () => {
-        console.log(formValidation());
         if (!formValidation()) {
-            console.log(`enter`);
             toast.warn('Fill All The Required Values !', {
                 position: "top-center",
                 autoClose: 1000,
@@ -51,9 +28,19 @@ const AdminAddInquiry = ({ token }) => {
             return
         }
         const formData = extractDataFeilds($("#addInquiryForm").serializeArray())
-        formData.addedBy = user.uid
-        console.log(formData);
-
+        if(dateValidation(formData.inquiry_date,formData.upcoming_date)){
+            toast.warn('Dates Are in Wrong order !', {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return 
+        }
         try {
             const res = await axios.post(addInquiryApi, formData)
             if (res.data.ok) {
@@ -92,8 +79,6 @@ const AdminAddInquiry = ({ token }) => {
                 theme: "colored",
             });
         }
-
-
     }
     const formValidation = () => {
         for (let i = 0; i < $("#addInquiryForm input").length; i++) {
@@ -106,6 +91,9 @@ const AdminAddInquiry = ({ token }) => {
             }
         }
         return true
+    }
+    const dateValidation=(start,end)=>{
+        return new Date(start)>new Date(end)
     }
 
 
@@ -198,9 +186,9 @@ const AdminAddInquiry = ({ token }) => {
                                                     <div className="dropdown mx-0">
                                                         <div><label className="form-label" htmlFor="form6Example2">Select Branch<span className="text-danger">*</span></label></div>
                                                         <select className="form-select" aria-label="Default select example" name='branchid' id='branchid'>
-                                                            {allbranches.length >= 1 ? allbranches.map((branch) => {
+                                                            {allbranches?allbranches.length >= 1 ? allbranches.map((branch) => {
                                                                 return <option value={branch.id} key={branch.id}>{branch.name}</option>
-                                                            }) : null}
+                                                            }) : <p>NoBranches</p> :<option>Loading...</option>}
                                                         </select>
                                                     </div>
                                                 </div>
@@ -213,7 +201,10 @@ const AdminAddInquiry = ({ token }) => {
                                                 <div className="col-5 mb-3">
                                                     <label className="form-label" htmlFor="upcoming_date">Upcoming Date<span className="text-danger">
                                                         *</span></label>
-                                                    <input type="date" id="upcoming_date" name='upcoming_date' className="form-control" />
+                                                    <input type="date" id="upcoming_date" name='upcoming_date' className="form-control" 
+                                                    onInput={()=>{
+                                                        dateValidation($('#inquiry_date').val(),$('#upcoming_date').val())?alert("wrong"):null
+                                                    }} />
                                                 </div>
 
                                                 <div className="col-5 mb-3">
@@ -233,13 +224,13 @@ const AdminAddInquiry = ({ token }) => {
                                                     <div className="dropdown mx-0">
                                                         <div>
                                                             <label className="form-label" htmlFor="form6Example2">
-                                                                 Intrested
-                                                                 <span className="text-danger">*</span>
+                                                                Intrested
+                                                                <span className="text-danger">*</span>
                                                             </label>
                                                         </div>
                                                         <select className="form-select" aria-label="Default select example" name='intrested' id='intrested'>
                                                             <option value='yes' >Yes</option>
-                                                            <option value='no' >Yes</option>
+                                                            <option value='no' >No</option>
                                                             <option value='later' >later</option>
                                                         </select>
                                                     </div>
