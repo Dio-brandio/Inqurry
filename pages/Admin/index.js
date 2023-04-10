@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Layout from "@/components/Layout";
 import Head from "next/head";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const allInquiresApi = 'http://localhost:3000/api/getAllInquires'
 export default function AdminHome({ userPath }) {
@@ -170,7 +172,7 @@ export default function AdminHome({ userPath }) {
                     </div>
                     <div className="col-6 font-primary">{item.intrested}</div>
                   </div>
-                  <a className="btn btn-primary mt-3" href={`${userPath}/actions/edit/inquiry/${item.id}`}>Details</a>
+                  <a className="btn btn-primary mt-3" href={`${userPath}/action/update/branch/${item.id}`}>Details</a>
                 </div>
               </div>
             </div>

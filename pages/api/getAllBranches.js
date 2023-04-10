@@ -1,13 +1,12 @@
 import { splitToken ,checkCookie} from "./middleware"
 const query = require('./dbconnect')
 export default async function handler(req, res) {
-    
+    const branchId = req.query.id
     const token = splitToken(req.headers.cookie)
     const isAdmin = await checkCookie(token, "admin");
     const isManager = await checkCookie(token, "manager");
     const isEmployee = await checkCookie(token, "employee");
 
-    
     if ( !isAdmin.verified && !isManager.verified && !isEmployee.verified) {
         return res.status(200).json({ message: 'Not Authenticated', ok: false })
     }
@@ -16,6 +15,10 @@ export default async function handler(req, res) {
     }
     try {
         if (isAdmin.verified) {
+            if (branchId!=undefined) {
+                const branches = await query(`call getAllBranchesByBranchId(${branchId})`)
+                return res.status(200).json({ branches: branches, ok: true })
+            }
             const branches = await query(`call getAllBranchesByBranchId(null)`)
             return res.status(200).json({ branches: branches, ok: true })
         }

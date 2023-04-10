@@ -13,7 +13,7 @@ const Searchbar = () => {
               <li className="breadcrumb-item text-sm text-white"><a className="opacity-5 text-white" href="">Role</a></li>
               <li className="breadcrumb-item text-sm active text-white" aria-current="page">{router.pathname.split('/')[1]}</li>
             </ol>
-            <h6 className="font-weight-bolder mb-0 text-white">{router.pathname.split('/')[2]==undefined?"DashBoard":router.pathname.split('/')[2]}</h6>
+            <h6 className="font-weight-bolder mb-0 text-white">{router.pathname.split('/')[2]==undefined?"DashBoard":router.pathname.split('/').splice(2,3).join('/')}</h6>
           </nav>
           <div className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             <div className="ms-md-auto pe-md-3 d-flex align-items-center">

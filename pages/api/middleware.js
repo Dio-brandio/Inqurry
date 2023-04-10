@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 export async function checkCookie(token,role){
     try{
-     
         if (token && token!=null || token !=undefined || token.length>1 ) {
             const verify =  jwt.verify(token,process.env.JWT_SECRET)
             if (verify.role==role) {

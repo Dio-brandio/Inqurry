@@ -3,7 +3,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from 'react';
 import Cookies from "js-cookie";
-import axios from "axios";
 
 const allBranchApi = 'http://localhost:3000/api/getAllBranches';
 
@@ -37,9 +36,11 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <title>Inquiry</title>
+      
       <Component 
       isAdmin={isAdmin} isManager={isManager} userPath={userPath} token={token} 
       allbranches={allbranches}
+      isUpdate={false} id={null}
       {...pageProps} />
     </>
   );

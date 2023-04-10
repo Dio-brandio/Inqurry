@@ -4,7 +4,7 @@ import React from 'react'
 const AllScripts = () => {
   return (
   <>
-    <Script defer src='../assets/js/navbar.js'></Script>
+    <Script defer src='/assets/js/navbar.js'></Script>
   </>
   )
 }

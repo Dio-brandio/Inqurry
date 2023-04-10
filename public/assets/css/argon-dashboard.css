@@ -2709,7 +2709,7 @@ progress {
 .col-form-label-lg {
   padding-top: calc(0.75rem + 1px);
   padding-bottom: calc(0.75rem + 1px);
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .col-form-label-sm {
@@ -2728,7 +2728,7 @@ progress {
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.4rem;
   color: #495057;
@@ -2836,7 +2836,7 @@ progress {
 .form-control-lg {
   min-height: unset;
   padding: 0.75rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   border-radius: 0.5rem;
 }
 
@@ -2883,7 +2883,7 @@ textarea.form-control-lg {
   width: 100%;
   padding: 0.5rem 1rem 0.5rem 0.75rem;
   -moz-padding-start: calc(0.75rem - 3px);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.4rem;
   color: #495057;
@@ -2938,7 +2938,7 @@ textarea.form-control-lg {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   padding-left: 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   border-radius: 0.5rem;
 }
 
@@ -3298,7 +3298,7 @@ textarea.form-control-lg {
   display: flex;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.4rem;
   color: #344767;
@@ -3314,7 +3314,7 @@ textarea.form-control-lg {
 .input-group-lg>.input-group-text,
 .input-group-lg>.btn {
   padding: 0.75rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   border-radius: 0.5rem;
 }
 
@@ -3366,7 +3366,7 @@ textarea.form-control-lg {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #000;
   background-color: rgba(102, 212, 50, 0.9);
   border-radius: 0.5rem;
@@ -3481,7 +3481,7 @@ textarea.form-control.is-valid {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #000;
   background-color: rgba(253, 92, 112, 0.9);
   border-radius: 0.5rem;
@@ -3584,7 +3584,7 @@ textarea.form-control.is-invalid {
   --bs-btn-padding-x: 1.25rem;
   --bs-btn-padding-y: 0.625rem;
   --bs-btn-font-family: ;
-  --bs-btn-font-size: 0.875rem;
+  --bs-btn-font-size: 1rem;
   --bs-btn-font-weight: 700;
   --bs-btn-line-height: 1.5;
   --bs-btn-color: #67748e;
@@ -3979,9 +3979,9 @@ fieldset:disabled .btn {
 
 .btn-lg,
 .btn-group-lg>.btn {
-  --bs-btn-padding-y: 0.875rem;
+  --bs-btn-padding-y: 1rem;
   --bs-btn-padding-x: 4rem;
-  --bs-btn-font-size: 0.875rem;
+  --bs-btn-font-size: 1rem;
   --bs-btn-border-radius: 0.5rem;
 }
 
@@ -4064,7 +4064,7 @@ fieldset:disabled .btn {
   --bs-dropdown-padding-x: 0;
   --bs-dropdown-padding-y: 0.5rem;
   --bs-dropdown-spacer: 1.625rem;
-  --bs-dropdown-font-size: 0.875rem;
+  --bs-dropdown-font-size: 1rem;
   --bs-dropdown-color: #67748e;
   --bs-dropdown-bg: #fff;
   --bs-dropdown-border-color: transparent;
@@ -4360,7 +4360,7 @@ fieldset:disabled .btn {
   display: block;
   padding: var(--bs-dropdown-header-padding-y) var(--bs-dropdown-header-padding-x);
   margin-bottom: 0;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--bs-dropdown-header-color);
   white-space: nowrap;
 }
@@ -5621,7 +5621,7 @@ fieldset:disabled .btn {
 .pagination-sm {
   --bs-pagination-padding-x: 0.5rem;
   --bs-pagination-padding-y: 0.25rem;
-  --bs-pagination-font-size: 0.875rem;
+  --bs-pagination-font-size: 1rem;
   --bs-pagination-border-radius: 0.25rem;
 }
 
@@ -6316,7 +6316,7 @@ fieldset:disabled .btn {
   --bs-toast-padding-y: 0.75rem;
   --bs-toast-spacing: 1.5rem;
   --bs-toast-max-width: 350px;
-  --bs-toast-font-size: 0.875rem;
+  --bs-toast-font-size: 1rem;
   --bs-toast-color: ;
   --bs-toast-bg: rgba(255, 255, 255, 0.85);
   --bs-toast-border-width: 0;
@@ -6717,7 +6717,7 @@ fieldset:disabled .btn {
   --bs-tooltip-padding-x: 0.5rem;
   --bs-tooltip-padding-y: 0.25rem;
   --bs-tooltip-margin: 0;
-  --bs-tooltip-font-size: 0.875rem;
+  --bs-tooltip-font-size: 1rem;
   --bs-tooltip-color: #fff;
   --bs-tooltip-bg: #000;
   --bs-tooltip-border-radius: 0.5rem;
@@ -20202,7 +20202,7 @@ fieldset:disabled .btn {
 .avatar-lg {
   width: 58px !important;
   height: 58px !important;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .avatar-lg.avatar-raised {
@@ -20212,7 +20212,7 @@ fieldset:disabled .btn {
 .avatar-sm {
   width: 36px !important;
   height: 36px !important;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .avatar-sm.avatar-raised {
@@ -20814,7 +20814,7 @@ fieldset:disabled .btn {
 }
 
 .breadcrumb-item {
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .breadcrumb-item.text-white::before {
@@ -20881,12 +20881,12 @@ fieldset:disabled .btn {
 .author .name>span {
   line-height: 1.571;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #3A416F;
 }
 
 .author .stats {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 
@@ -21018,7 +21018,7 @@ fieldset:disabled .btn {
 }
 
 .card.card-background .card-category {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -21582,7 +21582,7 @@ fieldset:disabled .btn {
 }
 
 .form-check-label {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 
@@ -21655,7 +21655,7 @@ label,
 .footer .nav-link {
   color: #344767;
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: 1rem;
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
@@ -21820,7 +21820,7 @@ label,
 
 .icon-md i {
   top: 12px;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .icon-md.icon-striped {
@@ -21831,7 +21831,7 @@ label,
 .icon-md.icon-striped i {
   top: 11%;
   margin-left: -10px;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .icon-lg {
@@ -22298,14 +22298,14 @@ hr.horizontal.gray-light {
 
 .navbar .navbar-brand {
   color: #344767;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .navbar .nav-link {
   color: #344767;
   padding: 0.5rem 1rem;
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .navbar.navbar-absolute {
@@ -23668,7 +23668,7 @@ hr.horizontal.gray-light {
 }
 
 .nav.nav-pills.nav-pills-vertical .nav-link.active {
-  border-radius: 0.875rem;
+  border-radius: 1rem;
 }
 
 .nav.nav-pills .nav-link {
@@ -23797,7 +23797,7 @@ hr.horizontal.gray-light {
   border-radius: 50% !important;
   width: 36px;
   height: 36px;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .pagination-lg .page-item .page-link,
@@ -24926,7 +24926,7 @@ p,
 }
 
 .text-sm {
-  font-size: 0.875rem !important;
+  font-size: 1rem !important;
 }
 
 .text-xs {

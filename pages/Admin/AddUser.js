@@ -25,7 +25,7 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
             });
             return
         }
-        const formData = extractDataFeilds($("#extractDataFeilds").serializeArray())
+        const formData = extractDataFeilds($("#adduserForm").serializeArray())
         const res = await axios.post(addUserApi, formData)
         try {
             if (res.data.ok) {
