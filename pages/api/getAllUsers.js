@@ -1,11 +1,11 @@
 import { splitToken ,checkCookie} from "./middleware"
 const query = require('./dbconnect')
 export default async function handler(req, res) {
-    let branchId = req.query.id
-    if (branchId==undefined) {
-        branchId=null
+    let id = req.query.id
+    if (id==undefined) {
+        id=null
     }else{
-        branchId = parseInt(branchId)
+        id = parseInt(id)
     }
     const token = splitToken(req.headers.cookie)
     const isAdmin = await checkCookie(token, "admin");
@@ -15,22 +15,18 @@ export default async function handler(req, res) {
     if ( !isAdmin.verified && !isManager.verified && !isEmployee.verified) {
         return res.status(200).json({ message: 'Not Authenticated', ok: false })
     }
-    if (req.method !== 'GET' || !token || Number.isNaN(branchId )) {
+    if (req.method !== 'GET' || !token  || Number.isNaN(id) || isEmployee.verified ) {
         return res.status(403).json({ message: 'Bad request', ok: false })
     }
     try {
-        if (isAdmin.verified) {
-                const branches = await query(`call getAllBranchesByBranchId(${branchId})`)
-                return res.status(200).json({ branches: branches, ok: true })
-          
+        if (isAdmin.verified && isAdmin.data.id!=id) {
+                const users = await query(`call getAllUsersBranchId(${isAdmin.data.branchid},${id})`)
+                return res.status(200).json({ users: users, ok: true })
         }
+
         if (isManager.verified) {
-            const branches = await query(`call getAllBranchesByBranchId(${isManager.data.branchid})`)
-            return res.status(200).json({ branches: branches, ok: true })
-        }
-        if (isEmployee.verified) {
-            const branches = await query(`call getAllBranchesByBranchId(${isEmployee.data.branchid})`)
-            return res.status(200).json({ branches: branches, ok: true })
+            const users = await query(`call getAllUsersBranchId(${isManager.data.branchid},${id})`)
+            return res.status(200).json({ users: users, ok: true })
         }
        
     } catch (error) {

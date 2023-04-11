@@ -1,17 +1,43 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useRef} from 'react'
 import Layout from '@/components/Layout'
 import axios from 'axios';
 import Head from 'next/head'
 import { ToastContainer, toast } from 'react-toastify';
 import Cookies from "js-cookie";
-import { checkCookieAndRedirect } from '@/middleware';
 import { extractDataFeilds } from '@/middleware';
 
 const addUserApi = 'http://localhost:3000/api/addUser';
+const updateUserApi = 'http://localhost:3000/api/updateUser/';
 
-const AdminAddUser = ({ isAdmin,allbranches }) => {
+const AdminAddUser = ({ isAdmin, allbranches, id, isUpdate }) => {
+
+    const [selectedUser, setSelectedUser] = useState([])
+
+      const fnameRef=useRef()
+      const lnameRef=useRef()
+      const emailRef=useRef()
+      const branchRef=useRef()
+      const roleRef=useRef()
+      const contactRef=useRef()
+  useEffect(() => {
+    if (id!=null && id!=undefined && isUpdate) {
+      const getUserByIdApi=`http://localhost:3000/api/getAllUsers?id=${id}`
+      fetch(getUserByIdApi).then((p)=>p.json()).then((data)=>setSelectedUser(data.users[0]))
+    }
+   
+  }, [id])
+ 
+  if (selectedUser!=null && selectedUser.length>0) {
+    console.log(roleRef.current.children);
+    fnameRef.current.value = selectedUser[0].fname
+    lnameRef.current.value = selectedUser[0].lname
+    contactRef.current.value = selectedUser[0].contact
+    emailRef.current.value = selectedUser[0].email
+    }
+
     
-    const addUserApiCall = async () => {
+   
+    const addUserOrrUpdateUserApiCall = async (update) => {
         if (!formValidation()) {
             toast.warn('Fill All The Required Values !', {
                 position: "top-center",
@@ -26,7 +52,7 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
             return
         }
         const formData = extractDataFeilds($("#adduserForm").serializeArray())
-        const res = await axios.post(addUserApi, formData)
+        const res = await axios.post(update ? updateUserApi + id : addUserApi, formData)
         try {
             if (res.data.ok) {
                 toast.success(res.data.message, {
@@ -101,17 +127,20 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
                 <div className="col">
                     <div className="card">
                         <div className="card-header text-center pb-0 px-3">
-                            <h3 className="mb-0">Add User</h3>
+                            <h3 className="mb-0">
+                                {isUpdate ? "Update User" : "Add User"}
+                            </h3>
                         </div>
                         <div className="card-body pt-4 p-3">
-                            <form className="form-card" id='adduserForm'>
+                            {isUpdate && selectedUser.length < 1 ? <h3>UserNot Available</h3> :""}
+                             <form className="form-card" id='adduserForm'>
                                 <div className="row">
                                     <div className="col-lg-3 col-sm-5 col-12 text-center">
                                         <div>
                                             <label className="form-label d-flex justify-content-center mt-2" htmlFor="">Id Proof
                                                 Photo</label>
                                             <div className="d-flex justify-content-center mt-0 mb-4">
-                                                <img src="../assets/img/team-4.jpg" className="rounded-circle w-100" alt="example placeholder" />
+                                                <img src="/assets/img/team-4.jpg" className="rounded-circle w-100" alt="example placeholder" />
                                             </div>
                                             <div className="d-flex justify-content-center">
                                                 <div className="btn btn-primary btn-rounded">
@@ -127,21 +156,27 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="">First name<span className="text-danger"> * </span></label>
-                                                    <input type="text" id="fname" className="form-control" name='fname' required />
+                                                    <input type="text" id="fname" className="form-control" name='fname' required
+                                                        ref={fnameRef}
+                                                    />
                                                 </div>
                                             </div>
 
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="form6Example2">Last name<span className="text-danger"> * </span></label>
-                                                    <input type="text" id="lname" className="form-control" name='lname' required />
+                                                    <input type="text" id="lname" className="form-control" name='lname' required
+                                                    ref={lnameRef}
+                                                    />
                                                 </div>
                                             </div>
 
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="form6Example2">Mobile<span className="text-danger"> * </span></label>
-                                                    <input type="text" id="contact" className="form-control" />
+                                                    <input type="text" id="contact" className="form-control"
+                                                    ref={contactRef}
+                                                    />
                                                 </div>
                                             </div>
 
@@ -149,10 +184,13 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
                                                 <div className="dropdown ">
                                                     <div><label className="form-label" htmlFor="form6Example2">Branch<span className="text-danger">* </span></label>
                                                     </div>
-                                                    <select className="form-select" aria-label="Default select example" name='branchid' id='branchid'>
-                                                        {allbranches?allbranches.length>=1?allbranches.map((branch)=>{
-                                                            return <option value={branch.id} key={branch.id}>{branch.name}</option>
-                                                        }):<p>No branches</p>:<option>Loading</option>}
+                                                    <select className="form-select" aria-label="Default select example" name='branchid' id='branchid'
+                                                    ref={branchRef}>
+                                                        {allbranches ? allbranches.length >= 1 ? allbranches.map((branch) => {
+                                                            return <option value={branch.id} key={branch.id} >
+                                                                {branch.name}
+                                                            </option>
+                                                        }) : <p>No branches</p> : <option>Loading</option>}
                                                     </select>
                                                 </div>
                                             </div>
@@ -160,14 +198,16 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="">Email<span className="text-danger"> * </span></label>
-                                                    <input type="email" id="email" className="form-control" name='email' required />
+                                                    <input type="email" id="email" className="form-control" name='email' required
+                                                    ref={emailRef} />
                                                 </div>
                                             </div>
 
                                             <div className="col-lg-5 mb-3">
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="">Password<span className="text-danger"> * </span></label>
-                                                    <input type="password" id="password" className="form-control" name='password' required />
+                                                    <input type="password" id="password" className="form-control" name='password'
+                                                    />
                                                 </div>
                                             </div>
 
@@ -175,16 +215,21 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
                                                 <div className="dropdown mx-0">
                                                     <div><label className="form-label" htmlFor="form6Example2">Role<span className="text-danger">* </span></label>
                                                     </div>
-                                                    <select className="form-select" aria-label="Default select example" name='role' id='role' required>
-                                                        <option defaultValue value="employee">Employee</option>
-                                                        {isAdmin ? <option value="manager">Manager</option> : null}
+                                                    <select className="form-select" aria-label="Default select example" name='role'
+                                                     id='role'
+                                                     ref={roleRef}>
+                                                        <option  value="employee">Employee</option>
+                                                        {isAdmin ? <option value="manager" >Manager</option> : null}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="col mt-2">
                                                     <div className="">
-                                                        <button type="button" onClick={addUserApiCall} className="btn btn-primary btn-block mb-4">Submit</button>
+                                                        <button type="button" onClick={() => { addUserOrrUpdateUserApiCall(isUpdate) }}
+                                                            className="btn btn-primary btn-block mb-4">
+                                                            {isUpdate ? "Update": "Submit"}
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -192,6 +237,8 @@ const AdminAddUser = ({ isAdmin,allbranches }) => {
                                     </div>
                                 </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>

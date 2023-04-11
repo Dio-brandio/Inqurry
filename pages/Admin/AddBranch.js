@@ -10,7 +10,6 @@ import  { useRouter } from 'next/router';
 const addBranchApi ="http://localhost:3000/api/addBranch"
 const updateBranchApi='http://localhost:3000/api/updateBranch/'
 const AdminAddBranch = ({isUpdate,id}) => {
-const router = useRouter()
     const [selectedBranch, setSelectedBranch] = useState(null)
 
     const nameRef = useRef()
@@ -19,7 +18,7 @@ const router = useRouter()
     const addresRef = useRef()
 
     useEffect(() => {
-      if (id!=null && id!=undefined) {
+      if (id!=null && id!=undefined && isUpdate) {
           console.log("use effect");
         const getBranchByIdApi=`http://localhost:3000/api/getAllBranches?id=${id}`
         fetch(getBranchByIdApi).then((p)=>p.json()).then((data)=>setSelectedBranch(data.branches[0]))
