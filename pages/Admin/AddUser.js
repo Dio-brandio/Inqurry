@@ -12,6 +12,7 @@ const updateUserApi = 'http://localhost:3000/api/updateUser/';
 const AdminAddUser = ({ isAdmin, allbranches, id, isUpdate }) => {
 
     const [selectedUser, setSelectedUser] = useState([])
+    const [loading, setLoading] = useState(true)
 
       const fnameRef=useRef()
       const lnameRef=useRef()
@@ -19,20 +20,24 @@ const AdminAddUser = ({ isAdmin, allbranches, id, isUpdate }) => {
       const branchRef=useRef()
       const roleRef=useRef()
       const contactRef=useRef()
+      const passwordRef=useRef()
   useEffect(() => {
     if (id!=null && id!=undefined && isUpdate) {
       const getUserByIdApi=`http://localhost:3000/api/getAllUsers?id=${id}`
       fetch(getUserByIdApi).then((p)=>p.json()).then((data)=>setSelectedUser(data.users[0]))
+      setLoading(false)
     }
    
   }, [id])
  
   if (selectedUser!=null && selectedUser.length>0) {
-    console.log(roleRef.current.children);
     fnameRef.current.value = selectedUser[0].fname
     lnameRef.current.value = selectedUser[0].lname
     contactRef.current.value = selectedUser[0].contact
     emailRef.current.value = selectedUser[0].email
+    passwordRef.current.value = selectedUser[0].password
+    branchRef.current.value = selectedUser[0].branchid
+    roleRef.current.value = selectedUser[0].role
     }
 
     
@@ -132,7 +137,7 @@ const AdminAddUser = ({ isAdmin, allbranches, id, isUpdate }) => {
                             </h3>
                         </div>
                         <div className="card-body pt-4 p-3">
-                            {isUpdate && selectedUser.length < 1 ? <h3>UserNot Available</h3> :""}
+                            {isUpdate && loading ? <p className='text-primary text-center'>Loading...</p> :""}
                              <form className="form-card" id='adduserForm'>
                                 <div className="row">
                                     <div className="col-lg-3 col-sm-5 col-12 text-center">
@@ -187,7 +192,7 @@ const AdminAddUser = ({ isAdmin, allbranches, id, isUpdate }) => {
                                                     <select className="form-select" aria-label="Default select example" name='branchid' id='branchid'
                                                     ref={branchRef}>
                                                         {allbranches ? allbranches.length >= 1 ? allbranches.map((branch) => {
-                                                            return <option value={branch.id} key={branch.id} >
+                                                            return <option value={branch.id} key={branch.id}>
                                                                 {branch.name}
                                                             </option>
                                                         }) : <p>No branches</p> : <option>Loading</option>}
@@ -207,7 +212,7 @@ const AdminAddUser = ({ isAdmin, allbranches, id, isUpdate }) => {
                                                 <div className="form-outline">
                                                     <label className="form-label" htmlFor="">Password<span className="text-danger"> * </span></label>
                                                     <input type="password" id="password" className="form-control" name='password'
-                                                    />
+                                                    ref={passwordRef} />
                                                 </div>
                                             </div>
 
@@ -219,7 +224,7 @@ const AdminAddUser = ({ isAdmin, allbranches, id, isUpdate }) => {
                                                      id='role'
                                                      ref={roleRef}>
                                                         <option  value="employee">Employee</option>
-                                                        {isAdmin ? <option value="manager" >Manager</option> : null}
+                                                        {isAdmin ? <option  value="manager" >Manager</option> : null}
                                                     </select>
                                                 </div>
                                             </div>

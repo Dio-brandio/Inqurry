@@ -16,13 +16,17 @@ export default async function handler(req, res) {
     try {
           const result = await query(`select * from branch where id=${id}`)
           if (result.length>0) {
-            const { email, address, name ,contact} = req.body
+            const { email, password, fname, lname, branchid, role ,contact} = req.body
+
             console.log(email, address, name ,contact);
-            const rowcount = await query(`update branch set 
+            const rowcount = await query(`update user set 
             email='${email.toString()}',
-            name='${name.toString()}',
+            password='${password.toString()}',
+            fname='${fname.toString()}',
+            lname='${lname.toString()}',
             contact='${contact.toString()}',
-            address='${address.toString()}'
+            branchid='${parseINT(branchid)}',
+            role='${parseINT(role)}',
             where id=${id}`)
             if (rowcount.affectedRows==1) {
                 return res.status(200).json({ message: 'Successfully Updated', ok: true })
