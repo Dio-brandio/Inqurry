@@ -4,9 +4,7 @@ import { useRouter } from 'next/router'
 
 const AdminUpdateUser = (props) => {
     const router = useRouter()
-  const {id} = router.query
-  
-
+    const {id} = router.query
   return (
      <AdminAddUser {...props} isUpdate={true} id={id}/>
   )

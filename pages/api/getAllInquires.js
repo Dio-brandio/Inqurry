@@ -15,16 +15,20 @@ export default async function handler(req, res) {
         return res.status(403).json({ message: 'Bad request', ok: false })
     }
     try {
+        let id = req.query.id
+        if (id==undefined) {
+            id=null
+        }
         if (isAdmin.verified) {
-            const inquires = await query(`call getAllInquiresByBranchId(null)`)
+            const inquires = await query(`call getAllInquiresByBranchId(${isAdmin.data.branchid},${id})`)
             return res.status(200).json({ inquires: inquires, ok: true })
         }
         if (isManager.verified) {
-            const inquires = await query(`call getAllInquiresByBranchId(${isManager.data.branchid})`)
+            const inquires = await query(`call getAllInquiresByBranchId(${isManager.data.branchid},${id})`)
             return res.status(200).json({ inquires: inquires, ok: true })
         }
         if (isEmployee.verified) {
-            const inquires = await query(`call getAllInquiresByBranchId(${isEmployee.data.branchid})`)
+            const inquires = await query(`call getAllInquiresByBranchId(${isEmployee.data.branchid},${id})`)
             return res.status(200).json({ inquires: inquires, ok: true })
         }
        

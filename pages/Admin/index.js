@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,Suspense  } from 'react'
 import Layout from "@/components/Layout";
 import Head from "next/head";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import InquiryCard from '@/components/InquiryCard';
+import { useRouter } from 'next/router';
 
 
 const allInquiresApi = 'http://localhost:3000/api/getAllInquires'
 export default function AdminHome({ userPath }) {
-  const [allInquies, setAllInquies] = useState(false)
+  const router = useRouter()
+  const [allInquies, setAllInquies] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    axios.get(allInquiresApi).then((data) => setAllInquies(data.data.inquires[0]))
-  }, [])
+    const setInquires =async()=>{
+      const data =await axios.get(allInquiresApi)
+      setAllInquies(data.data.inquires[0])
+      setLoading(false)
+    }
+    setInquires()
+  }, [router.pathname])
   return (
     <>
       <Head>
@@ -137,46 +146,11 @@ export default function AdminHome({ userPath }) {
           </div>
         </div>
         <div className="row p-3">
-          {allInquies ? allInquies.length > 0 ? allInquies.map((item) => {
-            return <div className=" col-lg-4 col-md-6 inquiry-card  p-3 " key={item.id}>
-              <div className="bg-white border border-dark-50 rounded px-4 py-1 ">
-                <div className="project-box">
-                  <span className="badge badge-primary">Pending</span>
-                  <h4>{item.course.toUpperCase()}</h4>
-                  <div className="d-flex align-items-center my-3">
-                    <img className="img-10 me-2 w-25 rounded"
-                      src="../assets/img/team-1.jpg"
-                      alt="image" />
-                    <div className="flex-grow-1 mb-0">
-                      <p className="fs-5mb-0">{item.fname} {item.lname}</p>
-                    </div>
-                  </div>
-                  <div className="flex-grow-1 mb-3">
-                    <p className="mb-0">{item.branchname}</p>
-                  </div>
-                  <hr className="hr bg-white" />
-                  <p>
-                    {item.feedback}
-                  </p>
-                  <div className="row details">
-                    <div className="col-6">
-                      <span>Inquiry date </span>
-                    </div>
-                    <div className="col-6 font-primary">{item.inquiry_date.split('T')[0]} </div>
-                    <div className="col-6">
-                      <span>Next Inquiry</span>
-                    </div>
-                    <div className="col-6 font-primary">{item.upcoming_date.split('T')[0]} </div>
-                    <div className="col-6">
-                      <span>Intrested</span>
-                    </div>
-                    <div className="col-6 font-primary">{item.intrested}</div>
-                  </div>
-                  <a className="btn btn-primary mt-3" href={`${userPath}/action/update/branch/${item.id}`}>Details</a>
-                </div>
-              </div>
-            </div>
-          }) : <h2 className='bg-light rounded'>There Are No Inquires</h2> : <h2>Loding...</h2>}
+        <Suspense fallback={<h3>Loading</h3>}>
+          { !loading?allInquies.length > 0 ? allInquies.map((item) => {
+            return <InquiryCard item={item} key={item.id}/>
+          }) : <h2 className='bg-light rounded'>There Are No Inquires</h2>:<h3>Loading...</h3> }
+            </Suspense>
         </div>
       </Layout>
     </>
