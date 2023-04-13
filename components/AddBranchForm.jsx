@@ -110,7 +110,7 @@ const AddBranchForm = ({ isUpdate, id }) => {
         }
         return true
     }
-    if (Object.keys(selectedBranch).length < 1 && !loading) {
+    if (Object.keys(selectedBranch).length < 1 && !loading && isUpdate) {
         return( <h2 className='text-secondary'>Not Available</h2> )
     }
     return (<>

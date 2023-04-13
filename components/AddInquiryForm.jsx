@@ -142,7 +142,7 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
   const dateValidation = (start, end) => {
     return new Date(start) > new Date(end)
   }
-  if (Object.keys(selectedInquiry).length < 1 && !loading){
+  if (Object.keys(selectedInquiry).length < 1 && !loading && isUpdate){
     return( <h2 className='text-secondary'>Not Available</h2> )
   }
   return (<>

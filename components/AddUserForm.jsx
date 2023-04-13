@@ -118,7 +118,7 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
     }
     return true
   }
-  if (Object.keys(selectedUser).length < 1 && !loading){
+  if (Object.keys(selectedUser).length < 1 && !loading && isUpdate){
     return( <h2 className='text-secondary'>Not Available</h2> )
   }
   return (<>
