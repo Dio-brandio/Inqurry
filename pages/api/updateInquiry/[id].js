@@ -14,18 +14,22 @@ export default async function handler(req, res) {
     }
   
     try {
-          const result = await query(`select * from users where id=${id}`)
+          const result = await query(`select * from inquires where id=${id}`)
           if (result.length>0) {
-            const { email, password, fname, lname, branchid, role ,contact} = req.body
+            const { fname,lname,email,contact,refrence,branchid,inquiry_date,upcoming_date,course,feedback,intrested} = req.body
 
-            const rowcount = await query(`update users set 
+            const rowcount = await query(`update inquires set 
             email='${email.toString()}',
-            password='${password.toString()}',
             fname='${fname.toString()}',
             lname='${lname.toString()}',
             contact='${contact.toString()}',
-            branchid='${parseInt(branchid)}',
-            role='${role}'
+            refrence='${refrence.toString()}',
+            branch='${parseInt(branchid)}',
+            inquiry_date='${parseInt(inquiry_date)}',
+            upcoming_date='${parseInt(upcoming_date)}',
+            course='${course.toString()}',
+            feedback='${feedback.toString()}',
+            intrested='${intrested.toString()}'
             where id=${id}`)
             if (rowcount.affectedRows==1) {
                 return res.status(200).json({ message: 'Successfully Updated', ok: true })
@@ -34,7 +38,7 @@ export default async function handler(req, res) {
             }
           }
           else{
-                return res.status(403).json({ message: 'No User', ok: false })
+                return res.status(403).json({ message: 'No Inquires', ok: false })
           }
          
 

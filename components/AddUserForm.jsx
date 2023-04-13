@@ -11,7 +11,7 @@ const addUserApi = process.env.API_ROUTE + "addUser"
 const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
   const [selectedUser, setSelectedUser] = useState({})
   const [branches, setbranches] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(isUpdate)
   const fnameRef = useRef()
   const lnameRef = useRef()
   const emailRef = useRef()
@@ -27,16 +27,18 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
         const parse = await fetch(getUserByIdApi)
         const data = await parse.json()
         setSelectedUser(data.users[0][0] == null || data.users[0][0] == undefined ? {} : data.users[0][0])
+        setLoading(false)
       }
       fethAllUsers()
+
     }
     const setBranches = async () => {
       setbranches(await allbranches())
-      setLoading(false)
+      
     }
     setBranches()
-
   }, [id])
+  console.log(loading);
   if (Object.keys(selectedUser).length > 0 && !loading) {
     fnameRef.current.value = selectedUser.fname
     lnameRef.current.value = selectedUser.lname
@@ -116,7 +118,9 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
     }
     return true
   }
-
+  if (Object.keys(selectedUser).length < 1 && !loading){
+    return( <h2 className='text-secondary'>Not Available</h2> )
+  }
   return (<>
     <ToastContainer
       position="top-center"

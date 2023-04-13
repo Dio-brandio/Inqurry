@@ -3,12 +3,11 @@ import axios from 'axios';
 import { useEffect, useState, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { extractDataFeilds } from '@/middleware';
-const {API_ROUTE} = process.env
-const addBranchApi = API_ROUTE+"addBranch"
-const updateBranchApi = API_ROUTE+'updateBranch'
+const addBranchApi = process.env.API_ROUTE+"addBranch"
+const updateBranchApi = process.env.API_ROUTE+'updateBranch'
 const AddBranchForm = ({ isUpdate, id }) => {
     const [selectedBranch, setSelectedBranch] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(isUpdate)
 
     const nameRef = useRef()
     const numberRef = useRef()
@@ -18,14 +17,22 @@ const AddBranchForm = ({ isUpdate, id }) => {
     useEffect(() => {
         if (id != null && id != undefined && isUpdate) {
             console.log("use effect");
-            const getBranchByIdApi = API_ROUTE+`getAllBranches?id=${id}`
-            fetch(getBranchByIdApi).
-                then((p) => p.json()).
-                then((data) => setSelectedBranch(data.branches[0][0] == null || data.branches[0][0] == undefined ? {} : data.branches[0][0]))
+            const getBranchByIdApi = process.env.API_ROUTE+`getAllBranches?id=${id}`
+            const setBranch = async ()=>{
+                const parse = await fetch(getBranchByIdApi)
+                const data = await parse.json()
+                if (data.ok) {
+                    setSelectedBranch( data.branches[0].length<1? {} : data.branches[0][0])
+                }else{
+                    setSelectedBranch({})
+                }
             setLoading(false)
+
+            }
+            setBranch()
         }
+   
     }, [id])
-    console.log(selectedBranch);
     if (Object.keys(selectedBranch).length > 0 && !loading) {
         nameRef.current.value = selectedBranch.name
         numberRef.current.value = Number(selectedBranch.contact)
@@ -102,6 +109,9 @@ const AddBranchForm = ({ isUpdate, id }) => {
             }
         }
         return true
+    }
+    if (Object.keys(selectedBranch).length < 1 && !loading) {
+        return( <h2 className='text-secondary'>Not Available</h2> )
     }
     return (<>
          {loading?<p className='text-primary'>Loading...</p>:null}

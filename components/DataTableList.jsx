@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const DataTableList = ({ id, api, columns, apifield }) => {
+const DataTableList = ({ id, api, columns, apifield,userPath }) => {
     const [data, setdata] = useState([])
     const [loading, setloading] = useState(true)
     useEffect(() => {
@@ -28,7 +28,9 @@ const DataTableList = ({ id, api, columns, apifield }) => {
                 columnsintable.push({ data: field, title: field })
             }
         }))
-        
+        columnsintable.push({data:null, render: function ( data, type, row ) {
+            return `<a target="_blank" href="/${userPath}/action/update/${apifield}/${data.id}" class="btn btn-info" >Edit</a>`
+        }, title: "Action" })
         const copy = data.map(object => ({ ...object }))
         copy.forEach(object => {
             feilds.forEach(((field) => {

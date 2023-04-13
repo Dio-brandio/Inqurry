@@ -10,7 +10,7 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
 
   const [selectedInquiry, setselectedInquiry] = useState({})
   const [branches, setbranches] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(isUpdate)
 
   const fnameRef = useRef()
   const lnameRef = useRef()
@@ -30,7 +30,12 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
       const fetchAllInquires = async () => {
         const parse = await fetch(getUserByIdApi)
         const data = await parse.json()
-        setselectedInquiry(data.inquires[0][0] == null || data.inquires[0][0] == undefined ? {} : data.inquires[0][0])
+        if (data.ok) {
+          setselectedInquiry(data.inquires[0].length<1 ? {} : data.inquires[0][0])
+        }
+        else{
+          setselectedInquiry({})
+        }
         setLoading(false)
       }
       fetchAllInquires()
@@ -39,7 +44,6 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
       setbranches(await allbranches())
     }
     setBranches()
-    setLoading(false)
   }, [id])
   if (Object.keys(selectedInquiry).length>0 && isUpdate) {
     fnameRef.current.value = selectedInquiry.fname
@@ -50,7 +54,7 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
     contactRef.current.value = selectedInquiry.contact
     inquiry_date_Ref.current.value = selectedInquiry.inquiry_date.split('T')[0]
     upcoming_date_Ref.current.value = selectedInquiry.upcoming_date.split('T')[0]
-    coursesRef.current.value = selectedInquiry.courses
+    coursesRef.current.value = selectedInquiry.course
     intrestedRef.current.value = selectedInquiry.intrested
     feedbackRef.current.value = selectedInquiry.feedback
   }
@@ -95,7 +99,9 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
           progress: undefined,
           theme: "colored",
         });
-        $("#addInquiryForm").trigger("reset")
+        if (isUpdate) {
+          $("#addInquiryForm").trigger("reset")
+        }
       } else {
         toast.error(res.data.message, {
           position: "top-center",
@@ -136,7 +142,9 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
   const dateValidation = (start, end) => {
     return new Date(start) > new Date(end)
   }
-
+  if (Object.keys(selectedInquiry).length < 1 && !loading){
+    return( <h2 className='text-secondary'>Not Available</h2> )
+  }
   return (<>
     <ToastContainer
       position="top-center"
@@ -151,6 +159,7 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
       pauseOnHover
       theme="colored"
     />
+    {loading?<p className='text-primary'>Loading...</p>:null}
     <form className="form-card" id='addInquiryForm'>
       <div className="row">
         <div className="col-3">

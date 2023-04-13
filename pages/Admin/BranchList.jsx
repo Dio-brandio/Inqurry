@@ -4,7 +4,7 @@ import Head from 'next/head'
 import React,{Suspense} from 'react'
 
 const getAllBranches = "http://localhost:3000/api/getAllBranches"
-const AdminBranchList = () => {
+const AdminBranchList = (props) => {
     return (
         <div>
             <Head>
@@ -25,8 +25,8 @@ const AdminBranchList = () => {
                             <div className="card-header text-center p-3">
                                 <Suspense fallback={"lading..."}>
                               <DataTableList id="branchesTable" api={getAllBranches} 
-                              apifield ={"branches"}
-                              columns={["name","email","contact","address","created_at"]}/>
+                              apifield ={"branches"} {...props}
+                              columns={["id","name","email","contact","address","created_at"]}/>
                                 </Suspense>
                             </div>
                         </div>
