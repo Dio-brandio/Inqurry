@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useEffect, useState, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { extractDataFeilds } from '@/middleware';
-
-const addBranchApi = "http://localhost:3000/api/addBranch"
-const updateBranchApi = 'http://localhost:3000/api/updateBranch/'
+const {API_ROUTE} = process.env
+const addBranchApi = API_ROUTE+"addBranch"
+const updateBranchApi = API_ROUTE+'updateBranch'
 const AddBranchForm = ({ isUpdate, id }) => {
     const [selectedBranch, setSelectedBranch] = useState({})
     const [loading, setLoading] = useState(true)
@@ -18,7 +18,7 @@ const AddBranchForm = ({ isUpdate, id }) => {
     useEffect(() => {
         if (id != null && id != undefined && isUpdate) {
             console.log("use effect");
-            const getBranchByIdApi = `http://localhost:3000/api/getAllBranches?id=${id}`
+            const getBranchByIdApi = API_ROUTE+`getAllBranches?id=${id}`
             fetch(getBranchByIdApi).
                 then((p) => p.json()).
                 then((data) => setSelectedBranch(data.branches[0][0] == null || data.branches[0][0] == undefined ? {} : data.branches[0][0]))

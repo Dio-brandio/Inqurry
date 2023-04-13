@@ -31,7 +31,7 @@ const DataTableList = ({ id, api, columns, apifield }) => {
         
         const copy = data.map(object => ({ ...object }))
         copy.forEach(object => {
-            feilds.forEach(((field, i) => {
+            feilds.forEach(((field) => {
                 if (!columns.includes(field)) {
                     delete object[`${field}`];
                 }

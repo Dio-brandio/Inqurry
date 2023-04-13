@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { extractDataFeilds } from '@/middleware';
-import Swal from 'sweetalert2/dist/sweetalert2.js'  
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from 'axios';
-const AddUserForm = ({isUpdate,id,allbranches,isAdmin}) => {
+
+
+const updateUserApi = process.env.API_ROUTE + "updateUser/"
+const addUserApi = process.env.API_ROUTE + "addUser"
+
+const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
   const [selectedUser, setSelectedUser] = useState({})
   const [branches, setbranches] = useState(null)
   const [loading, setLoading] = useState(true)
-
   const fnameRef = useRef()
   const lnameRef = useRef()
   const emailRef = useRef()
@@ -17,97 +21,100 @@ const AddUserForm = ({isUpdate,id,allbranches,isAdmin}) => {
   const passwordRef = useRef()
 
   useEffect(() => {
-      if ((id != null || id != undefined) && isUpdate) {
-          const getUserByIdApi = `http://localhost:3000/api/getAllUsers?id=${id}`
-          const fethAllUsers = async()=>{
-              const parse =await fetch(getUserByIdApi)
-              const data = await parse.json()
-              setSelectedUser(data.users[0][0] == null || data.users[0][0] == undefined ? {} : data.users[0][0])
-              setLoading(false)
-          }
-          fethAllUsers()
+    if ((id != null || id != undefined) && isUpdate) {
+      const getUserByIdApi = `http://localhost:3000/api/getAllUsers?id=${id}`
+      const fethAllUsers = async () => {
+        const parse = await fetch(getUserByIdApi)
+        const data = await parse.json()
+        setSelectedUser(data.users[0][0] == null || data.users[0][0] == undefined ? {} : data.users[0][0])
       }
-      const setBranches =async()=>{
-          setbranches(await allbranches())    
-      }
-      setBranches()
+      fethAllUsers()
+    }
+    const setBranches = async () => {
+      setbranches(await allbranches())
+      setLoading(false)
+    }
+    setBranches()
+
   }, [id])
   if (Object.keys(selectedUser).length > 0 && !loading) {
-      fnameRef.current.value = selectedUser.fname
-      lnameRef.current.value = selectedUser.lname
-      contactRef.current.value = selectedUser.contact
-      emailRef.current.value = selectedUser.email
-      passwordRef.current.value = selectedUser.password
-      branchRef.current.value = selectedUser.branchid
-      roleRef.current.value = selectedUser.role
-  } 
+    fnameRef.current.value = selectedUser.fname
+    lnameRef.current.value = selectedUser.lname
+    contactRef.current.value = selectedUser.contact
+    emailRef.current.value = selectedUser.email
+    passwordRef.current.value = selectedUser.password
+    branchRef.current.value = selectedUser.branchid
+    roleRef.current.value = selectedUser.role
+  }
 
   const addUserOrrUpdateUserApiCall = async (update) => {
-      if (!formValidation()) {
-          toast.warn('Fill All The Required Values !', {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-          });
-          return
+    if (!formValidation()) {
+      toast.warn('Fill All The Required Values !', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return
+    }
+    const formData = extractDataFeilds($("#adduserForm").serializeArray())
+    const res = await axios.post(update ? updateUserApi + id : addUserApi, formData)
+    try {
+      if (res.data.ok) {
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        if (!isUpdate) {
+          $("#adduserForm").trigger("reset")
+        }
+      } else {
+        toast.error(res.data.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
-      const formData = extractDataFeilds($("#adduserForm").serializeArray())
-      const res = await axios.post(update ? updateUserApi + id : addUserApi, formData)
-      try {
-          if (res.data.ok) {
-              toast.success(res.data.message, {
-                  position: "top-center",
-                  autoClose: 1000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-              });
-              $("#adduserForm").trigger("reset")
-          } else {
-              toast.error(res.data.message, {
-                  position: "top-center",
-                  autoClose: 1000,
-                  hideProgressBar: true,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-              });
-          }
-      } catch (error) {
-          toast.error("There Is Some Error In Server Side " + error.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-          });
-      }
+    } catch (error) {
+      toast.error("There Is Some Error In Server Side " + error.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   }
 
   const formValidation = () => {
-      for (let i = 0; i < $("#adduserForm input").length; i++) {
-          const ele = $("#adduserForm input")[i];
-          if (ele.type == "text" || ele.type == "email" || ele.type == "password" || ele.type == "number") {
-              if ($(ele).val() == null || $(ele).val() == '' || $(ele).val() == ' ' || $(ele).val() == undefined) {
-                  ele.focus()
-                  return false
-              }
-          }
+    for (let i = 0; i < $("#adduserForm input").length; i++) {
+      const ele = $("#adduserForm input")[i];
+      if (ele.type == "text" || ele.type == "email" || ele.type == "password" || ele.type == "number") {
+        if ($(ele).val() == null || $(ele).val() == '' || $(ele).val() == ' ' || $(ele).val() == undefined) {
+          ele.focus()
+          return false
+        }
       }
-      return true
+    }
+    return true
   }
 
   return (<>
@@ -124,7 +131,7 @@ const AddUserForm = ({isUpdate,id,allbranches,isAdmin}) => {
       pauseOnHover
       theme="colored"
     />
-    {loading?<p className='text-primary'>Loading...</p>:null}
+    {loading ? <p className='text-primary'>Loading...</p> : null}
     <form className="form-card" id='adduserForm'>
       <div className="row">
         <div className="col-lg-3 col-sm-5 col-12 text-center">
@@ -167,6 +174,7 @@ const AddUserForm = ({isUpdate,id,allbranches,isAdmin}) => {
               <div className="form-outline">
                 <label className="form-label" htmlFor="form6Example2">Mobile<span className="text-danger"> * </span></label>
                 <input type="text" id="contact" className="form-control"
+                name='contact'
                   ref={contactRef}
                 />
               </div>
