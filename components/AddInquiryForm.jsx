@@ -39,6 +39,7 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
       setbranches(await allbranches())
     }
     setBranches()
+    setLoading(false)
   }, [id])
   if (Object.keys(selectedInquiry).length>0 && isUpdate) {
     fnameRef.current.value = selectedInquiry.fname

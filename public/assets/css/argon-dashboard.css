@@ -339,6 +339,7 @@ figure {
 img,
 svg {
   vertical-align: middle;
+  color:var(--bs-primary)
 }
 
 table {
@@ -22511,7 +22512,7 @@ hr.horizontal.gray-light {
 }
 
 .navbar-vertical .navbar-nav .nav-link .icon {
-  padding: 10px;
+  font-size: 1.2rem;
 }
 
 .navbar-vertical .navbar-nav .nav-sm .nav-link {
@@ -24585,6 +24586,7 @@ hr.horizontal.gray-light {
   text-transform: capitalize;
   letter-spacing: 0px;
   border-bottom: 1px solid #e9ecef;
+  text-align: center;
 }
 
 .table th {
@@ -24613,6 +24615,7 @@ hr.horizontal.gray-light {
 
 .table> :not(:last-child)> :last-child>* {
   border-bottom-color: #e9ecef;
+  text-align: center;
 }
 
 .table> :not(:first-child) {
