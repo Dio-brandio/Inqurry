@@ -9,7 +9,7 @@ const DataTableList = ({ id, api, columns, apifield }) => {
         } catch (error) {
 
         }
-        const getAllInquiry = async () => {
+        const getAllData = async () => {
             const data = await fetch(api)
             const resposnse = await data.json()
             if (resposnse.ok) {
@@ -18,17 +18,17 @@ const DataTableList = ({ id, api, columns, apifield }) => {
             }
 
         }
-        getAllInquiry()
+        getAllData()
     }, [])
     const createTable = () => {
         const feilds = Object.keys(data[0])
         const columnsintable = []
-        feilds.forEach(((field, i) => {
-            if (columns.includes(field)) {
+        columns.forEach(((field, i) => {
+            if (feilds.includes(field)) {
                 columnsintable.push({ data: field, title: field })
             }
         }))
-        console.log(columnsintable);
+        
         const copy = data.map(object => ({ ...object }))
         copy.forEach(object => {
             feilds.forEach(((field, i) => {

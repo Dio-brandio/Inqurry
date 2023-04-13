@@ -15,14 +15,14 @@ const AdminUserList = () => {
                 <div className="row">
                     <div className="col-12 my-5">
                         <div className="card rounded">
-                            <div className="card-header text-center pb-0 px-3">
-                                <h3 className="mb-0">List Of inquires</h3>
+                            <div className="card-header text-center  p-3">
+                                <h3 className="mb-0">List Of Users</h3>
                             </div>
                         </div>
                     </div>
                     <div className="col-12 my-5">
                     <div className="card rounded">
-                            <div className="card-header text-center pb-0 px-3">
+                            <div className="card-header text-center p-3">
                                 <Suspense fallback={"lading..."}>
                               <DataTableList id="usersTable" api={getAllUsers} 
                               apifield ={"users"}
