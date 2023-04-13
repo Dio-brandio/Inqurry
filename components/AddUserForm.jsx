@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { extractDataFeilds } from '@/middleware';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from 'axios';
+import Head from 'next/head';
 
 
 const updateUserApi = process.env.API_ROUTE + "updateUser/"
@@ -119,7 +120,12 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
     return true
   }
   if (Object.keys(selectedUser).length < 1 && !loading && isUpdate){
-    return( <h2 className='text-secondary'>Not Available</h2> )
+    return( <>
+    <Head>
+      <title>404</title>
+    </Head>
+    <h2 className='text-secondary'>Not Available</h2>
+    </> )
   }
   return (<>
     <ToastContainer
@@ -135,7 +141,11 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
       pauseOnHover
       theme="colored"
     />
-    {loading ? <p className='text-primary'>Loading...</p> : null}
+
+    {loading ? <p className='text-primary'>Loading...</p> :null}
+    <Head>
+      <title>{loading?"Loading":isUpdate?"Edit-"+selectedUser.fname:"Add New User"}</title>
+    </Head>
     <form className="form-card" id='adduserForm'>
       <div className="row">
         <div className="col-lg-3 col-sm-5 col-12 text-center">

@@ -8,7 +8,7 @@ const AdminInquiryList = (props) => {
     return (
         <div>
             <Head>
-                <title> Add User</title>
+                <title>List Of Inquires</title>
             </Head>
             <Layout>
 

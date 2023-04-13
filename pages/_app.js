@@ -32,8 +32,6 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <title>Inquiry</title>
-      
       <Component 
       isAdmin={isAdmin} isManager={isManager} userPath={userPath} token={token} 
       allbranches={allbranches}

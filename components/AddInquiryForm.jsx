@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { extractDataFeilds } from '@/middleware'
 import axios from 'axios'
+import Head from 'next/head';
 
 const addInquiryApi = 'http://localhost:3000/api/addInquiry';
 const updateInquiryApi = 'http://localhost:3000/api/updateInquiry/';
@@ -160,6 +161,9 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
       theme="colored"
     />
     {loading?<p className='text-primary'>Loading...</p>:null}
+    <Head>
+      <title>{loading?"Loading":isUpdate?selectedInquiry.fname+"-Inquiry":"Add New Inquiry"}</title>
+    </Head>
     <form className="form-card" id='addInquiryForm'>
       <div className="row">
         <div className="col-3">

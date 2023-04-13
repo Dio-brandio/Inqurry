@@ -3,8 +3,9 @@ import axios from 'axios';
 import { useEffect, useState, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { extractDataFeilds } from '@/middleware';
-const addBranchApi = process.env.API_ROUTE+"addBranch"
-const updateBranchApi = process.env.API_ROUTE+'updateBranch'
+import Head from 'next/head';
+const addBranchApi = process.env.API_ROUTE + "addBranch"
+const updateBranchApi = process.env.API_ROUTE + 'updateBranch'
 const AddBranchForm = ({ isUpdate, id }) => {
     const [selectedBranch, setSelectedBranch] = useState({})
     const [loading, setLoading] = useState(isUpdate)
@@ -17,21 +18,21 @@ const AddBranchForm = ({ isUpdate, id }) => {
     useEffect(() => {
         if (id != null && id != undefined && isUpdate) {
             console.log("use effect");
-            const getBranchByIdApi = process.env.API_ROUTE+`getAllBranches?id=${id}`
-            const setBranch = async ()=>{
+            const getBranchByIdApi = process.env.API_ROUTE + `getAllBranches?id=${id}`
+            const setBranch = async () => {
                 const parse = await fetch(getBranchByIdApi)
                 const data = await parse.json()
                 if (data.ok) {
-                    setSelectedBranch( data.branches[0].length<1? {} : data.branches[0][0])
-                }else{
+                    setSelectedBranch(data.branches[0].length < 1 ? {} : data.branches[0][0])
+                } else {
                     setSelectedBranch({})
                 }
-            setLoading(false)
+                setLoading(false)
 
             }
             setBranch()
         }
-   
+
     }, [id])
     if (Object.keys(selectedBranch).length > 0 && !loading) {
         nameRef.current.value = selectedBranch.name
@@ -111,11 +112,13 @@ const AddBranchForm = ({ isUpdate, id }) => {
         return true
     }
     if (Object.keys(selectedBranch).length < 1 && !loading && isUpdate) {
-        return( <h2 className='text-secondary'>Not Available</h2> )
+        return (<h2 className='text-secondary'>Not Available</h2>)
     }
     return (<>
-         {loading?<p className='text-primary'>Loading...</p>:null}
-
+        {loading ? <p className='text-primary'>Loading...</p> : null}
+        <Head>
+            <title>{loading ? "Loading" : isUpdate ?"Edit-"+selectedBranch.name  : "Add New Branch"}</title>
+        </Head>
         <form className='row p-4 w-lg-50 w-100 p-4  rounded' id='addBranchForm'>
 
             <div className="form-outline d-flex  text-center mb-4  col-12">
@@ -137,8 +140,8 @@ const AddBranchForm = ({ isUpdate, id }) => {
             </div>
             <div className="form-outline d-flex  justify-content-center col-12 ">
                 <button type="button" onClick={() => { addOrUpdateBranchApiCall(isUpdate) }} className="btn btn-lg btn-primary  btn-block mb-4"
-                disabled={isUpdate && !(Object.keys(selectedBranch).length > 0 && !loading)}>
-                {loading ? "Loading" : isUpdate ? Object.keys(selectedBranch).length > 0 ? "Update" : "No Branch Found" : "Submit"}
+                    disabled={isUpdate && !(Object.keys(selectedBranch).length > 0 && !loading)}>
+                    {loading ? "Loading" : isUpdate ? Object.keys(selectedBranch).length > 0 ? "Update" : "No Branch Found" : "Submit"}
                 </button>
             </div>
         </form>

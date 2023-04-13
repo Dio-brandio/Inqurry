@@ -8,7 +8,7 @@ const AdminBranchList = (props) => {
     return (
         <div>
             <Head>
-                <title> Add User</title>
+                <title>List Of Branches</title>
             </Head>
             <Layout>
 

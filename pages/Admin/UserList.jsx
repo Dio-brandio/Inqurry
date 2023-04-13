@@ -8,7 +8,7 @@ const AdminUserList = (props) => {
     return (
         <div>
             <Head>
-                <title> Add User</title>
+                <title>List Of Users</title>
             </Head>
             <Layout>
 
