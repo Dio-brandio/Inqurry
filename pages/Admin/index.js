@@ -16,6 +16,11 @@ export default function AdminHome({ userPath }) {
   useEffect(() => {
     const setInquires =async()=>{
       const data =await axios.get(allInquiresApi)
+      const nice =await axios.get("http://localhost:3000/api/getApiHit",{
+        headers: {
+          api_key: "123",
+        }
+      })
       setAllInquies(data.data.inquires[0])
       setLoading(false)
     }

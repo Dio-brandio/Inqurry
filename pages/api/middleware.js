@@ -56,7 +56,7 @@ export async function sendMailTo(email,mailmessage){
 
   let message = {
     from: '"Fred Foo 👻" <foo@example.com>',
-    to: email,
+    to: email,  
     subject: "Hello ✔",
     text: mailmessage.toString(),
     html: `<b>This is ${mailmessage.toString()}</b>`,
