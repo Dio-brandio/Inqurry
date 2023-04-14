@@ -17,7 +17,7 @@ export default async function handler(req, res) {
           const result = await query(`select * from inquires where id=${id}`)
           if (result.length>0) {
             const { fname,lname,email,contact,refrence,branchid,inquiry_date,upcoming_date,course,feedback,intrested} = req.body
-
+console.log(inquiry_date,upcoming_date);
             const rowcount = await query(`update inquires set 
             email='${email.toString()}',
             fname='${fname.toString()}',
@@ -25,8 +25,8 @@ export default async function handler(req, res) {
             contact='${contact.toString()}',
             refrence='${refrence.toString()}',
             branch='${parseInt(branchid)}',
-            inquiry_date='${parseInt(inquiry_date)}',
-            upcoming_date='${parseInt(upcoming_date)}',
+            inquiry_date='${(inquiry_date).toString()}',
+            upcoming_date='${(upcoming_date).toString()}',
             course='${course.toString()}',
             feedback='${feedback.toString()}',
             intrested='${intrested.toString()}'

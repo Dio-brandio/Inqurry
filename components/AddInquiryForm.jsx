@@ -74,6 +74,7 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
       return
     }
     const formData = extractDataFeilds($("#addInquiryForm").serializeArray())
+    console.log(formData);
     if (dateValidation(formData.inquiry_date, formData.upcoming_date)) {
       toast.warn('Dates Are in Wrong order !', {
         position: "top-center",
@@ -100,7 +101,8 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
           progress: undefined,
           theme: "colored",
         });
-        if (isUpdate) {
+        console.log(res);
+        if (!isUpdate) {
           $("#addInquiryForm").trigger("reset")
         }
       } else {

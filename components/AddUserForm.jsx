@@ -23,23 +23,33 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
 
   useEffect(() => {
     if ((id != null || id != undefined) && isUpdate) {
+
       const getUserByIdApi = `http://localhost:3000/api/getAllUsers?id=${id}`
       const fethAllUsers = async () => {
-        const parse = await fetch(getUserByIdApi)
-        const data = await parse.json()
-        setSelectedUser(data.users[0][0] == null || data.users[0][0] == undefined ? {} : data.users[0][0])
+        try {
+          const fetcheddata = await axios.get(getUserByIdApi)
+          if (fetcheddata.data.ok) {
+            setSelectedUser(fetcheddata.data.users[0][0] == undefined ? {} : fetcheddata.data.users[0][0])
+          }
+          else {
+            setSelectedUser({})
+          }
+        } catch(err) {
+         setSelectedUser({})
+        }
+
         setLoading(false)
+
       }
       fethAllUsers()
 
     }
     const setBranches = async () => {
       setbranches(await allbranches())
-      
+
     }
     setBranches()
   }, [id])
-  console.log(loading);
   if (Object.keys(selectedUser).length > 0 && !loading) {
     fnameRef.current.value = selectedUser.fname
     lnameRef.current.value = selectedUser.lname
@@ -119,13 +129,13 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
     }
     return true
   }
-  if (Object.keys(selectedUser).length < 1 && !loading && isUpdate){
-    return( <>
-    <Head>
-      <title>404</title>
-    </Head>
-    <h2 className='text-secondary'>Not Available</h2>
-    </> )
+  if (Object.keys(selectedUser).length < 1 && !loading && isUpdate) {
+    return (<>
+      <Head>
+        <title>404</title>
+      </Head>
+      <h2 className='text-secondary'>Not Available</h2>
+    </>)
   }
   return (<>
     <ToastContainer
@@ -142,9 +152,9 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
       theme="colored"
     />
 
-    {loading ? <p className='text-primary'>Loading...</p> :null}
+    {loading ? <p className='text-primary'>Loading...</p> : null}
     <Head>
-      <title>{loading?"Loading":isUpdate?"Edit-"+selectedUser.fname:"Add New User"}</title>
+      <title>{loading ? "Loading" : isUpdate ? "Edit-" + selectedUser.fname : "Add New User"}</title>
     </Head>
     <form className="form-card" id='adduserForm'>
       <div className="row">
@@ -188,7 +198,7 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
               <div className="form-outline">
                 <label className="form-label" htmlFor="form6Example2">Mobile<span className="text-danger"> * </span></label>
                 <input type="text" id="contact" className="form-control"
-                name='contact'
+                  name='contact'
                   ref={contactRef}
                 />
               </div>

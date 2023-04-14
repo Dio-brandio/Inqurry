@@ -1,4 +1,4 @@
-import { splitToken ,checkCookie, checkDate} from "./middleware"
+import { splitToken ,checkCookie, checkDate, sendMailTo} from "./middleware"
 const query = require('./dbconnect')
 export default async function handler(req, res) {
     
@@ -7,7 +7,6 @@ export default async function handler(req, res) {
     const isManager = await checkCookie(token, "manager");
     const isEmployee = await checkCookie(token, "employee");
 
-    
     if (req.method !== 'POST' ||  !req.body) {
         return res.status(403).json({ message: 'Bad request', ok: false })
     }
@@ -49,7 +48,10 @@ export default async function handler(req, res) {
             '${intrested.toString()}')`)
 
             if (rowcount.affectedRows==1) {
+
+                sendMailTo(email,`Your next inquiry will be on ${upcoming_date}`)
                 return res.status(200).json({ message: 'Successfully Added', ok: true })
+
             }else{
                 return res.status(500).json({ message: "Server Error ", ok: false })
             }
