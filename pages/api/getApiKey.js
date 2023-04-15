@@ -1,19 +1,25 @@
+import { splitToken, checkCookie } from "./middleware"
 import { v4 as uuidv4 } from 'uuid';
 const query = require('./dbconnect')
 export default async function handler(req, res) {
 
-   
+    const token = splitToken(req.headers.cookie)
+    const isAdmin = await checkCookie(token, "admin");
+
+    if (!isAdmin.verified) {
+        return res.status(200).json({ message: 'Not Authenticated', ok: false })
+    }
     if (req.method !== 'GET') {
         return res.status(403).json({ message: 'Bad request', ok: false })
     }
     try {
-        // const users = await query(`call getAllUsersBranchId(${isAdmin.data.branchid},${id})`)
         const apiKey = uuidv4()
-        const rowcount =await query(`INSERT INTO apikeys( value, api_limit) VALUES ('${apiKey}','3')`)
+        const rowcount =await query(`call apiKeyAssign('${isAdmin.data.uid}','${apiKey}')`)
         if (rowcount.affectedRows==1) {
             return res.status(200).json({ apiKey: apiKey, ok: true })
-        }else{
-            return res.status(200).json({ apikey: apiKey, ok: true })
+        }
+        else{
+            return res.status(200).json({ message: "There is some error", ok:false })
         }
         
     } catch (error) {

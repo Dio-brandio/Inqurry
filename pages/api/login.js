@@ -7,13 +7,12 @@ export default async function handler(req, res) {
     }
     try {
         const { email,  password } = req.body
-        console.log(email,password);
 
         const user = await query(`select * from users where email='${email.toString()}' and password='${password.toString()}'`)
         if (user.length==0) {
             return res.json({ message: 'Invalid credentials',ok:false })
         }
-        else{
+        else if(user.length>0){
             const token = jwt.sign({
                 uid: user[0].id,
                 email: user[0].email,
