@@ -5,9 +5,9 @@ const CallApi = () => {
     const [loading, setLoading] = useState(false)
     const getApiKey =async()=>{
         setLoading(true)
-        const response = await axios.get("http://localhost:3000/api/getApiHit",{
+        const response = await axios.get(process.env.API_ROUTE+"getApiHit",{
             headers:{
-                api_key:"f07e2384-0d4b-4629-b343-89e5e05c68e0"
+                api_key:"642957bb-2b90-4006-81be-7f41daa4f037"
             }
         })
         console.log(response.data);

@@ -9,13 +9,8 @@ export default async function handler(req, res) {
     }
     try {
         const isVerified = await query(`call checkApiKeyAndHit('${api_key.toString()}')`)
-        console.log( isVerified.length);
-        if ( isVerified.length==1) {
-            return res.status(200).json({ users: isVerified, ok: true })
-        }
-        else{
-            return res.status(200).json({ users: isVerified, ok: false })
-        }
+            return res.status(200).json({ data:isVerified[0], ok: true })
+       
 
 
     } catch (error) {

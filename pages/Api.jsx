@@ -6,7 +6,7 @@ const Api = () => {
     const [loading, setLoading] = useState(false)
     const getApiKey =async()=>{
         setLoading(true)
-        const response = await axios.get("http://localhost:3000/api/getApiKey")
+        const response = await axios.get(process.env.API_ROUTE+"getApiKey")
         console.log(response.data);
         setApiKey(response.data.apiKey)
         setLoading(false)

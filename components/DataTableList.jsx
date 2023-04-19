@@ -23,10 +23,10 @@ const DataTableList = ({ id, api, columns, apifield, userPath }) => {
         const columnsintable = []
         columns.forEach(((field, i) => {
             if (feilds.includes(field)) {
-                if (field == "inquiry_date" || field == "upcoming_date") {
+                if (field == "inquiry_date" || field == "upcoming_date" || field == "created_at" ) {
                     columnsintable.push({
                         data: null, title: field, mRender: (o) => {
-                            return o[`${field}`].split("T")[0]
+                            return o[`${field}`].split("T")[0]+`<br>`+o[`${field}`].split("T")[1]
                         }
                     })
                 } else {

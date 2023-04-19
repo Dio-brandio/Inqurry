@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Head from 'next/head'
 import React,{Suspense} from 'react'
 
-const getAllBranches = "http://localhost:3000/api/getAllBranches"
+const getAllBranches = process.env.API_ROUTE+"getAllBranches"
 const AdminBranchList = (props) => {
     return (
         <div>

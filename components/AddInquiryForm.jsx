@@ -4,8 +4,8 @@ import { extractDataFeilds } from '@/middleware'
 import axios from 'axios'
 import Head from 'next/head';
 
-const addInquiryApi = 'http://localhost:3000/api/addInquiry';
-const updateInquiryApi = 'http://localhost:3000/api/updateInquiry/';
+const addInquiryApi = process.env.API_ROUTE+'addInquiry';
+const updateInquiryApi = process.env.API_ROUTE+'updateInquiry/';
 
 const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
 
@@ -27,7 +27,7 @@ const AddInquiryForm = ({ isUpdate, id, allbranches }) => {
 
   useEffect(() => {
     if ((id != null || id != undefined) && isUpdate) {
-      const getUserByIdApi = `http://localhost:3000/api/getAllInquires?id=${id}`
+      const getUserByIdApi = process.env.API_ROUTE+`getAllInquires?id=${id}`
       const fetchAllInquires = async () => {
         const parse = await fetch(getUserByIdApi)
         const data = await parse.json()

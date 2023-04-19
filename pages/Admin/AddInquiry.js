@@ -10,22 +10,19 @@ const AdminAddInquiry = (props) => {
    
     return (
         <>
-            <Head>
-                <title>Inqury add</title>
-            </Head>
+            
             <Layout>
             
                 <div className="row">
                     <div className="col">
                         <div className="card">
                             <div className="card-header text-center pb-0 px-3">
-                                <h3 className="mb-0">Add Inquiry</h3>
+                                <h3 className="mb-0">{props.isUpdate?"Update":"Add"} Inquiry</h3>
                             </div>
 
                             <div className="card-body p-3 d-flex align-items-center justify-content-center flex-column">
                                <Suspense 
-                               fallback={<>"Loading..."</>}
-                               >
+                               fallback={<>"Loading..."</>}>
                                 <AddInquiryForm {...props}/>
                                </Suspense>
                             </div>

@@ -36,7 +36,7 @@ const InquiryCard = ({item,userPath}) => {
           </div>
           <div className="col-6 font-primary">{item.intrested}</div>
         </div>
-        <a className="btn btn-primary mt-3" href={`${userPath}/action/update/branch/${item.id}`}>Details</a>
+        <a className="btn btn-primary mt-3" href={`${userPath}/action/update/inquires/${item.id}`}>Details</a>
       </div>
     </div>
   </div>

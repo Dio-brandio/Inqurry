@@ -7,8 +7,9 @@ import InquiryCard from '@/components/InquiryCard';
 import { useRouter } from 'next/router';
 
 
-const allInquiresApi = 'http://localhost:3000/api/getAllInquires'
-export default function AdminHome({ userPath }) {
+      
+const allInquiresApi = process.env.API_ROUTE+'getAllInquires'
+export default function AdminHome(props) {
   const router = useRouter()
   const [allInquies, setAllInquies] = useState([])
   const [loading, setLoading] = useState(true)
@@ -16,11 +17,6 @@ export default function AdminHome({ userPath }) {
   useEffect(() => {
     const setInquires =async()=>{
       const data =await axios.get(allInquiresApi)
-      const nice =await axios.get("http://localhost:3000/api/getApiHit",{
-        headers: {
-          api_key: "123",
-        }
-      })
       setAllInquies(data.data.inquires[0])
       setLoading(false)
     }
@@ -153,7 +149,7 @@ export default function AdminHome({ userPath }) {
         <div className="row p-3">
         <Suspense fallback={<h3>Loading</h3>}>
           { !loading?allInquies.length > 0 ? allInquies.map((item) => {
-            return <InquiryCard item={item} key={item.id}/>
+            return <InquiryCard item={item} key={item.id} {...props}/>
           }) : <h2 className='bg-light rounded'>There Are No Inquires</h2>:<h3>Loading...</h3> }
             </Suspense>
         </div>

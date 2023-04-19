@@ -7,13 +7,9 @@ export default function Document() {
       <Head>
 
         
-      <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
-        <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
-        <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+      
           <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
-        <link id="pagestyle"
-          href="/assets/css/argon-dashboard.css"
-          rel="stylesheet" />
+        
 
 
         <script src="/js/jquery.js" ></script>

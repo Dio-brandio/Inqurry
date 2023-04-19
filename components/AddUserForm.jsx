@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { extractDataFeilds } from '@/middleware';
-import Swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from 'axios';
 import Head from 'next/head';
 
@@ -24,7 +23,7 @@ const AddUserForm = ({ isUpdate, id, allbranches, isAdmin }) => {
   useEffect(() => {
     if ((id != null || id != undefined) && isUpdate) {
 
-      const getUserByIdApi = `http://localhost:3000/api/getAllUsers?id=${id}`
+      const getUserByIdApi = process.env.API_ROUTE+`getAllUsers?id=${id}`
       const fethAllUsers = async () => {
         try {
           const fetcheddata = await axios.get(getUserByIdApi)

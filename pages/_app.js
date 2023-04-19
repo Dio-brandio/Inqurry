@@ -1,17 +1,20 @@
 import "@/styles/globals.css";
+import "@/styles/assets/css/nucleo-icons.css" 
+import "@/styles/assets/css/nucleo-svg.css" 
+import "@/styles/assets/css/nucleo-svg.css"; 
 
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from 'react';
 import Cookies from "js-cookie";
 
-const allBranchApi = 'http://localhost:3000/api/getAllBranches';
+const allBranchApi = process.env.API_ROUTE+'getAllBranches';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter()
   const allbranches =async()=>{
     console.log("start fetching");
-    const response = await fetch("http://localhost:3000/api/getAllBranches");
+    const response = await fetch(process.env.API_ROUTE+"getAllBranches");
     const branches = await response.json();
     return branches.branches[0]
   }

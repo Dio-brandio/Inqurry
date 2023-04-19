@@ -15,12 +15,7 @@ export default async function handler(req, res) {
     try {
         const apiKey = uuidv4()
         const rowcount =await query(`call apiKeyAssign('${isAdmin.data.uid}','${apiKey}')`)
-        if (rowcount.affectedRows==1) {
             return res.status(200).json({ apiKey: apiKey, ok: true })
-        }
-        else{
-            return res.status(200).json({ message: "There is some error", ok:false })
-        }
         
     } catch (error) {
         return res.status(500).json({ message: error.message, ok: false })
